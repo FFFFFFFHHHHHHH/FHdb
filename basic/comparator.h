@@ -23,12 +23,43 @@ public:
     return lhs.compare(rhs) == 0;
   }
 
-  bool EqualAndGreater(const T& lhs, const T& rhs) {
+  bool EqualOrGreater(const T& lhs, const T& rhs) {
     return lhs.compare(rhs) >= 0;
   }
 
-  bool greater(const T& lhs, const T& rhs) { 
+  bool EqualOrLess(const T& lhs, const T& rhs) { 
     return lhs.compare(rhs) <= 0;
+  }    
+};
+
+
+template <>
+class Comparator<int> {
+
+public:
+  int Compare(const int& lhs, const int& rhs) {
+    return lhs == rhs ? 0 :
+              lhs > rhs ? 1 : -1;
+  }
+  
+  bool Greater(const int& lhs, const int& rhs) {
+    return lhs > rhs;
+  }
+
+  bool Less(const int& lhs, const int& rhs) {
+    return lhs < rhs;
+  }
+
+  bool Equal(const int& lhs, const int& rhs) { 
+    return lhs == rhs;
+  }
+
+  bool EqualOrGreater(const int& lhs, const int& rhs) {
+    return lhs >= rhs;
+  }
+
+  bool EqualOrLess(const int& lhs, const int& rhs) { 
+    return lhs <= rhs;
   }    
 };
 

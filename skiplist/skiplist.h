@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 #include "../basic/slice.h"
 #include "../basic/comparator.h"
 #include "node.h"
@@ -11,24 +12,123 @@ class SkipList {
 
 public:
 
-  size_t GetRandom();
+  SkipList();
+
+  std::shared_ptr<Node<K, V>> Find(const K& key);
+  
+  bool Insert(const K& key, const V& value);
+
+  bool Delete(const K& key);
+
+  bool Clear();
+
+private:
+  std::shared_ptr<Node<K, V>> CreateNode(const K& key, const V& value, const size_t& level);
+
+  bool Empty();
+
+  size_t GetRandomLevel();
 
 private:
   std::shared_ptr<Node<K,V>> head_;
-  std::shared_ptr<Node<K,V>> tail_;
   size_t level_;
   size_t node_cnt_;
-  static const size_t MAX_LEVEL = 20;
+  const size_t MAX_LEVEL;
+  // static const size_t MAX_LEVEL = 20; cant compiler in this mac
   Random rnd_;
+  Comparator<K> cmp_;
 };
 
 template <typename K, typename V>
-size_t SkipList<K, V>::GetRandom() {
-  size_t level = static_cast<size_t>(rnd_.Uniform(MAX_LEVEL));
-  if (level == 0) {
-    level++;
+std::shared_ptr<Node<K, V>> SkipList<K, V>::CreateNode(
+                            const K& key, const V& value, const size_t& level) {
+  std::shared_ptr<Node<K, V>> ptr = std::make_shared<Node<K, V>>(key, value, level);
+  return ptr;
+}
+
+template <typename K, typename V>
+SkipList<K, V>::SkipList() : rnd_(123456789), MAX_LEVEL(20) {
+  head_ = CreateNode(-1, -1, MAX_LEVEL); // ???
+  level_ = 0;
+}
+
+template <typename K, typename V>
+std::shared_ptr<Node<K, V>> SkipList<K, V>::Find(const K& key) {
+  std::shared_ptr<Node<K, V>> node = head_;
+  assert(node != nullptr);
+  assert(level_ >= 0 && level_ <= MAX_LEVEL);
+  // std::cerr << "start find\n";
+  for (int i = level_ - 1; i >= 0; i--) {
+    while (node->forward_[i] && cmp_.Less(node->forward_[i]->key_, key)) {
+      node = node->forward_[i];
+    }
   }
-  return level;
+  // std::cerr << "node.val" << node->value_ << "\n";
+  assert(node != nullptr);
+  if (node->forward_[0] && cmp_.Equal(node->forward_[0]->key_, key)) {
+    return node->forward_[0];
+  } else {
+    return nullptr;
+  }
+}
+
+template <typename K, typename V>
+bool SkipList<K, V>::Insert(const K& key, const V& value) {
+  // std::cerr << "start find" << std::endl;
+  if (Find(key)) {
+    return false; // have is key
+  }
+  // std::cerr << "find over \n";
+  std::shared_ptr<Node<K, V>> node = head_;
+  assert(node != nullptr);
+  assert(level_ >= 0 && level_ <= MAX_LEVEL);
+  std::vector<std::shared_ptr<Node<K, V>>> update(MAX_LEVEL, head_);
+
+  for (int i = level_ - 1; i >= 0; --i) {
+    while (node->forward_[i] && cmp_.Less(node->forward_[i]->key_, key)) {
+      node = node->forward_[i];
+    }
+    assert(i < update.size());
+    update[i] = node;
+  }
+
+  size_t new_level = GetRandomLevel();
+  auto new_node = CreateNode(key, value, new_level);
+  assert(new_node != nullptr);
+  if (!new_node) {
+    return false;
+  }
+  if (new_level > level_) {
+    new_level = ++level_;
+  }
+  // std::cerr << "level: " << new_level << std::endl;
+  for (int i = 0; i < new_level; i++) {
+    new_node->forward_[i] = update[i]->forward_[i];
+    update[i]->forward_[i] = new_node;
+  }
+  
+  return true;
+}
+
+template <typename K, typename V>
+size_t SkipList<K, V>::GetRandomLevel() {
+  size_t level = static_cast<size_t>(rnd_.Uniform(MAX_LEVEL));
+  return level + 1;
+}
+
+template <typename K, typename V>
+bool SkipList<K, V>::Empty() {
+  bool empty = true;
+  for (int i = level_ - 1; i >= 0; i--) {
+    if (head_[i]) {
+      empty = false;
+      break;
+    }
+  }
+  assert(empty == (level_ == 0));
+  return empty;
 }
 
 }
+
+
