@@ -1,9 +1,9 @@
 #pragma once
-#include <iostream>
 #include "../basic/slice.h"
 #include "../basic/comparator.h"
 #include "node.h"
 #include "random.h"
+#include <iostream>
 
 namespace FHdb {
 
@@ -22,10 +22,10 @@ public:
 
   bool Clear();
 
+  bool Empty();
+
 private:
   std::shared_ptr<Node<K, V>> CreateNode(const K& key, const V& value, const size_t& level);
-
-  bool Empty();
 
   size_t GetRandomLevel();
 
@@ -33,7 +33,7 @@ private:
   std::shared_ptr<Node<K,V>> head_;
   size_t level_;
   size_t node_cnt_;
-  const size_t MAX_LEVEL;
+  constexpr static size_t MAX_LEVEL = 20;
   // static const size_t MAX_LEVEL = 20; cant compiler in this mac
   Random rnd_;
   Comparator<K> cmp_;
@@ -47,8 +47,8 @@ std::shared_ptr<Node<K, V>> SkipList<K, V>::CreateNode(
 }
 
 template <typename K, typename V>
-SkipList<K, V>::SkipList() : rnd_(123456789), MAX_LEVEL(20) {
-  head_ = CreateNode(-1, -1, MAX_LEVEL); // ???
+SkipList<K, V>::SkipList() : rnd_(123456789) {
+  head_ = CreateNode(K(), V(), MAX_LEVEL); // ???
   level_ = 0;
 }
 
@@ -120,13 +120,20 @@ template <typename K, typename V>
 bool SkipList<K, V>::Empty() {
   bool empty = true;
   for (int i = level_ - 1; i >= 0; i--) {
-    if (head_[i]) {
+    if (head_->forward_[i]) {
       empty = false;
       break;
     }
   }
   assert(empty == (level_ == 0));
   return empty;
+}
+
+template <typename K, typename V>
+bool SkipList<K, V>::Clear() {
+  // reset head node 
+  head_ = std::make_shared<Node<K, V>>(K(), V(), MAX_LEVEL);
+  level_ = 0;
 }
 
 }
