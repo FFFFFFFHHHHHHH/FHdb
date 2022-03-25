@@ -63,4 +63,25 @@ public:
   }    
 };
 
+template <>
+class Comparator<std::string> {
+
+public:
+  
+  bool Less(const std::string& lhs, const std::string& rhs) {
+    for (int i = 0; i < std::min(lhs.size(), rhs.size()); i++) {
+      if (lhs[i] != rhs[i]) {
+        if (lhs[i] < rhs[i]) return true;
+        else return false;
+      }
+    }
+    return rhs.size() > lhs.size();
+  }
+
+  bool Equal(const std::string& lhs, const std::string& rhs) { 
+    return lhs == rhs;
+  }
+};
+
+
 }

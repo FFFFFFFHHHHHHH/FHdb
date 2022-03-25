@@ -34,7 +34,6 @@ private:
   size_t level_;
   size_t node_cnt_;
   constexpr static size_t MAX_LEVEL = 20;
-  // static const size_t MAX_LEVEL = 20; cant compiler in this mac
   Random rnd_;
   Comparator<K> cmp_;
 };
@@ -74,21 +73,10 @@ std::shared_ptr<Node<K, V>> SkipList<K, V>::Find(const K& key) {
 
 template <typename K, typename V>
 bool SkipList<K, V>::Insert(const K& key, const V& value) {
-  
   // std::cerr << "start find" << std::endl;
-#define C(i) (std::to_string(i))
-  for (int i = 0; i <= 2; i++) {
-  if (Find(C(i))) {
-      printf("i = %d aaa find2\n", i);
-  } else 
-      printf("i = %d aaa not find2\n", i);
-  }
-
   if (Find(key)) {
-    puts("find WTF");
     return false; // have is key
   }
-  puts("start insert");
   // std::cerr << "find over \n";
   std::shared_ptr<Node<K, V>> node = head_;
   assert(node != nullptr);

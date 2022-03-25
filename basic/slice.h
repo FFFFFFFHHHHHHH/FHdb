@@ -10,21 +10,22 @@ namespace FHdb {
 class Slice {
 
 public:
-  Slice() : data_(""), size_() {}
+  Slice() : data_(""), size_(0) {}
 
-  Slice(const char* data, size_t size) : data_(data), size_(size) {}
+  Slice(const char* data, size_t size) : data_(std::string(data, size)), size_(size) {}
 
-  Slice(const char* data) : data_(data), size_(strlen(data)) {}
+  Slice(const char* data) : data_(std::string(data, strlen(data))), size_(strlen(data)) {}
 
-  Slice(const std::string& str) : data_(str.data()), size_(str.size()) {}
+  Slice(const std::string& str) : data_(str), size_(str.size()) {}
+
+  Slice(int rhs) {
+    data_ = std::to_string(rhs);
+    size_ = data_.size();
+  }
 
   Slice(const Slice& rhs) : data_(rhs.data_), size_(rhs.size_) {}
   
-  Slice& operator = (const Slice&) = default;
-
-  const char* data() {
-    return data_;
-  }
+  Slice& operator = (const Slice& rhs) = delete;
 
   size_t size() {
     return size_;
@@ -55,7 +56,7 @@ public:
   }
 
   bool start_with(const Slice& x) {
-    return (x.size_ <= size_) && (memcmp(data_, x.data_, x.size_));
+    return (x.size_ <= size_) && (memcmp(data_.data(), x.data_.data(), x.size_));
   }
 
   int compare(const Slice& x) const {
@@ -71,8 +72,8 @@ public:
 
 
   bool operator == (const Slice& rhs) {
-    return (size_ == rhs.size_) 
-                  && (memcmp(data_, rhs.data_, size_) == 0);
+    return (size_ == rhs.size_)
+                  && (memcmp(data_.data(), rhs.data_.data(), size_) == 0);
   }
 
   bool operator != (const Slice& rhs) {
@@ -80,7 +81,7 @@ public:
   }
 
 private:
-  const char* data_;
+  std::string data_;
   size_t size_;
 };
 

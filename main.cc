@@ -7,154 +7,130 @@
 
 using namespace FHdb;
 
-void test_int() {
 #define ERROR success = 0;
-  // bool success = true;
-  // SkipList<int, int> sk;
-  //
-  // for (int i = 0; i <= 10000; i++) {
-  //    sk.Insert(i, i);
-  // }
-  //
-  // for (int i = 0; i <= 10000; i++) {
-  //   auto ptr = sk.Find(i);
-  //   if (!ptr) ERROR
-  //   else if (ptr->value_ != i) ERROR
-  // }
-  //
-  // sk.Clear();
-  // assert(cnt_new - cnt_delete == 1); // test Clear
-  // assert(sk.Empty() == true); // test Empty
-  //
-  // srand(time(0));
-  // int rnd = rand();
-  // for (int i = 0; i <= 20000; i++) {
-  //   sk.Insert(i, i + rnd);
-  // }
-  //
-  // for (int i = 0; i <= 20000; i++) {
-  //   auto ptr = sk.Find(i);
-  //   if (!ptr) ERROR
-  //   else if (ptr->value_ != i + rnd) ERROR
-  // }
-  // sk.Clear();
-  // assert(cnt_new - cnt_delete == 1); // test Clear
-  // assert(sk.Empty() == true); // test Empty
-  //
-  // // test delete
-  // for (int i = 1; i <= 100; i++) {
-  //   sk.Insert(i, i+1);
-  // }
-  //
-  // for (int i = 20; i <= 30; i++) {
-  //   sk.Delete(i);
-  // }
-  // std::vector<int> fail;
-  // for (int i = 1; i <= 100; i++) {
-  //   if (!sk.Find(i)) {
-  //     fail.push_back(i);
-  //   }
-  // }
-  // if (fail.size() != 11) ERROR
-  // for (auto && v: fail) {
-  //   if (!(v >= 20 && v <= 30)) ERROR
-  // }
-  // sk.Clear();
-  // assert(cnt_new - cnt_delete == 1);
-  // assert(sk.Empty() == true);
-  // std::cerr << (success ? "TRUE" : "FALSE") << " in int test" << std::endl;
+
+void test_skiplist_int() {
+  bool success = true;
+  SkipList<int, int> sk;
+
+  for (int i = 0; i <= 10000; i++) {
+     sk.Insert(i, i);
+  }
+
+  for (int i = 0; i <= 10000; i++) {
+    auto ptr = sk.Find(i);
+    if (!ptr) ERROR
+    else if (ptr->value_ != i) ERROR
+  }
+
+  sk.Clear();
+  assert(cnt_new - cnt_delete == 1); // test Clear
+  assert(sk.Empty() == true); // test Empty
+
+  srand(time(0));
+  int rnd = rand();
+  for (int i = 0; i <= 20000; i++) {
+    sk.Insert(i, i + rnd);
+  }
+
+  for (int i = 0; i <= 20000; i++) {
+    auto ptr = sk.Find(i);
+    if (!ptr) ERROR
+    else if (ptr->value_ != i + rnd) ERROR
+  }
+  sk.Clear();
+  assert(cnt_new - cnt_delete == 1); // test Clear
+  assert(sk.Empty() == true); // test Empty
+
+  // test delete
+  for (int i = 1; i <= 100; i++) {
+    sk.Insert(i, i+1);
+  }
+
+  for (int i = 20; i <= 30; i++) {
+    sk.Delete(i);
+  }
+  std::vector<int> fail;
+  for (int i = 1; i <= 100; i++) {
+    if (!sk.Find(i)) {
+      fail.push_back(i);
+    }
+  }
+  if (fail.size() != 11) ERROR
+  for (auto && v: fail) {
+    if (!(v >= 20 && v <= 30)) ERROR
+  }
+  sk.Clear();
+  assert(cnt_new - cnt_delete == 1);
+  assert(sk.Empty() == true);
+  std::cerr << (success ? "TRUE" : "FALSE") << " in int test" << std::endl;
 }
 
-void test_slice() {
-#define ERROR success = 0;
-#define C(i) (std::to_string(i))
+void test_skiplist_slice() {
   bool success = true;
-  Comparator<Slice> cmp;
-
-  if (!cmp.Equal(C(10), "10")) {
-    puts("cmperror");
-  }
-  
   SkipList<Slice, Slice> sk; 
 
-  for (int i = 0; i <= 2; i++) {
-    printf("-------\ni = %d\n", i);
-    for (int j = 0; j <= 2; j++) {
-      if (sk.Find(C(j))) 
-        printf("j = %d find\n", j);
-      else printf("j = %d not find\n", j);
-    }
-    
-    puts("before insert");
-    if (sk.Insert(C(i), C(i)) == false) {
-      std::cerr << i << "  insert errror" << std::endl;
-    } else 
-      std::cerr << i << "  insert ok" << std::endl;
+  for (int i = 0; i <= 1000; i++) {
+    if (!sk.Insert(i, i)) ERROR
+  }
 
-    for (int j = 0; j <= 2; j++) {
-      if (sk.Find(C(j))) 
-        printf("j = %d find\n", j);
-      else printf("j = %d not find\n", j);
+  for (int i = 0; i <= 1000; i++) {
+    auto ptr = sk.Find(i);
+    if (!ptr) {
+      ERROR
+      std::cerr << "cnt find" << std::endl;
+    }
+    else if (ptr->value_ != i) {
+      std::cerr << "value: " << ptr->value_.ToString();
     }
   }
-  
-  // for (int i = 0; i <= 10; i++) {
-  //   auto ptr = sk.Find(C(i));
-  //   if (!ptr) {
-  //     ERROR
-  //     std::cerr << "cnt find" << std::endl;
-  //   }
-  //   else if (ptr->value_ != C(i)) {
-  //     std::cerr << "value: " << ptr->value_.ToString();
-  //   }
-  // }
 
-  // sk.Clear();
-  // assert(cnt_new - cnt_delete == 1); // test Clear
-  // assert(sk.Empty() == true); // test Empty
-  //
-  // srand(time(0));
-  // int rnd = rand();
-  // for (int i = 0; i <= 20000; i++) {
-  //   sk.Insert(i, i + rnd);
-  // }
-  //
-  // for (int i = 0; i <= 20000; i++) {
-  //   auto ptr = sk.Find(i);
-  //   if (!ptr) ERROR
-  //   else if (ptr->value_ != i + rnd) ERROR
-  // }
-  // sk.Clear();
-  // assert(cnt_new - cnt_delete == 1); // test Clear
-  // assert(sk.Empty() == true); // test Empty
-  //
+  sk.Clear();
+  assert(cnt_new - cnt_delete == 1); // test Clear
+  assert(sk.Empty() == true); // test Empty
+  
+  srand(time(0));
+  int rnd = rand();
+  for (int i = 0; i <= 20000; i++) {
+    sk.Insert(i, i + rnd);
+  }
+
+  for (int i = 0; i <= 20000; i++) {
+    auto ptr = sk.Find(i);
+    if (!ptr) ERROR
+    else if (ptr->value_ != i + rnd) ERROR
+   }
+  sk.Clear();
+  assert(cnt_new - cnt_delete == 1); 
+  assert(sk.Empty() == true); 
+  
   // test delete
-  // for (int i = 1; i <= 100; i++) {
-  //   sk.Insert(i, i+1);
-  // }
-  //
-  // for (int i = 20; i <= 30; i++) {
-  //   sk.Delete(i);
-  // }
-  // std::vector<int> fail;
-  // for (int i = 1; i <= 100; i++) {
-  //   if (!sk.Find(i)) {
-  //     fail.push_back(i);
-  //   }
-  // }
-  // if (fail.size() != 11) ERROR
-  // for (auto && v: fail) {
-  //   if (!(v >= 20 && v <= 30)) ERROR
-  // }
-  // sk.Clear();
-  // assert(cnt_new - cnt_delete == 1);
-  // assert(sk.Empty() == true);
+  for (int i = 1; i <= 100; i++) {
+    sk.Insert(i, i+1);
+  }
+
+  for (int i = 20; i <= 30; i++) {
+    sk.Delete(i);
+  }
+  std::vector<int> fail;
+  for (int i = 1; i <= 100; i++) {
+    if (!sk.Find(i)) {
+      fail.push_back(i);
+    }
+  }
+  if (fail.size() != 11) ERROR
+  for (auto && v: fail) {
+    if (!(v >= 20 && v <= 30)) ERROR
+  }
+  sk.Clear();
+  assert(cnt_new - cnt_delete == 1);
+  assert(sk.Empty() == true);
   std::cerr << (success ? "TRUE" : "FALSE") << " in slice test" << std::endl;
 }
 
 void TEST() {
-  // test_int();
-  test_slice();
+  test_skiplist_int();
+  test_skiplist_slice();
 }
 
 int main() {
