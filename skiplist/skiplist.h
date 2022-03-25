@@ -74,10 +74,21 @@ std::shared_ptr<Node<K, V>> SkipList<K, V>::Find(const K& key) {
 
 template <typename K, typename V>
 bool SkipList<K, V>::Insert(const K& key, const V& value) {
+  
   // std::cerr << "start find" << std::endl;
+#define C(i) (std::to_string(i))
+  for (int i = 0; i <= 2; i++) {
+  if (Find(C(i))) {
+      printf("i = %d aaa find2\n", i);
+  } else 
+      printf("i = %d aaa not find2\n", i);
+  }
+
   if (Find(key)) {
+    puts("find WTF");
     return false; // have is key
   }
+  puts("start insert");
   // std::cerr << "find over \n";
   std::shared_ptr<Node<K, V>> node = head_;
   assert(node != nullptr);
@@ -105,6 +116,34 @@ bool SkipList<K, V>::Insert(const K& key, const V& value) {
   for (int i = 0; i < new_level; i++) {
     new_node->forward_[i] = update[i]->forward_[i];
     update[i]->forward_[i] = new_node;
+  }
+  
+  return true;
+}
+
+template <typename K, typename V>
+bool SkipList<K, V>::Delete(const K& key) {
+  auto delete_node = Find(key);
+  if (!delete_node) {
+    return false;
+  }
+
+  std::shared_ptr<Node<K, V>> node = head_;
+  assert(node != nullptr);
+  assert(level_ >= 0 && level_ <= MAX_LEVEL);
+  std::vector<std::shared_ptr<Node<K, V>>> update(MAX_LEVEL, head_);
+
+  for (int i = level_ - 1; i >= 0; --i) {
+    while (node->forward_[i] && cmp_.Less(node->forward_[i]->key_, key)) {
+      node = node->forward_[i];
+    }
+    assert(i < update.size());
+    update[i] = node;
+  }
+
+  size_t delete_level = delete_node->level_;
+  for (int i = 0; i < delete_level; ++i) {
+    update[i]->forward_[i] = delete_node->forward_[i];
   }
   
   return true;

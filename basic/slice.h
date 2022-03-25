@@ -18,7 +18,7 @@ public:
 
   Slice(const std::string& str) : data_(str.data()), size_(str.size()) {}
 
-  Slice(const Slice&) = default;
+  Slice(const Slice& rhs) : data_(rhs.data_), size_(rhs.size_) {}
   
   Slice& operator = (const Slice&) = default;
 
@@ -58,7 +58,7 @@ public:
     return (x.size_ <= size_) && (memcmp(data_, x.data_, x.size_));
   }
 
-  int compare(const Slice& x) {
+  int compare(const Slice& x) const {
     size_t min_len = std::min(size_, x.size_);
     for (int i = 0; i < min_len; i++) {
       if (data_[i] != x.data_[i]) {
