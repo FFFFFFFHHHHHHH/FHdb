@@ -28,7 +28,7 @@ aux_source_directory(. DIR_SRCS)
 # add_subdirectory(skiplist)
 
 # 指定生成目标 
-add_executable(Demo main.cc basic/comparator.h basic/slice.h skiplist/node.h skiplist/random.h skiplist/skiplist.h)
+add_executable(Demo main.cc test/test.h test/test.cc basic/comparator.h basic/slice.h basic/slice.cc skiplist/node.h skiplist/random.h skiplist/skiplist.h)
 
 # 添加链接库
 # target_link_libraries(Demo basic)

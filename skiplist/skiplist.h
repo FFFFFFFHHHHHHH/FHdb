@@ -83,11 +83,11 @@ bool SkipList<K, V>::Insert(const K& key, const V& value) {
   assert(level_ >= 0 && level_ <= MAX_LEVEL);
   std::vector<std::shared_ptr<Node<K, V>>> update(MAX_LEVEL, head_);
 
-  for (int i = level_ - 1; i >= 0; --i) {
+  for (int i = static_cast<int>(level_ - 1); i >= 0; --i) {
     while (node->forward_[i] && cmp_.Less(node->forward_[i]->key_, key)) {
       node = node->forward_[i];
     }
-    assert(i < update.size());
+    assert(i < static_cast<int>(update.size()));
     update[i] = node;
   }
 
@@ -101,7 +101,7 @@ bool SkipList<K, V>::Insert(const K& key, const V& value) {
     new_level = ++level_;
   }
   // std::cerr << "level: " << new_level << std::endl;
-  for (int i = 0; i < new_level; i++) {
+  for (size_t i = 0; i < new_level; i++) {
     new_node->forward_[i] = update[i]->forward_[i];
     update[i]->forward_[i] = new_node;
   }
@@ -121,16 +121,16 @@ bool SkipList<K, V>::Delete(const K& key) {
   assert(level_ >= 0 && level_ <= MAX_LEVEL);
   std::vector<std::shared_ptr<Node<K, V>>> update(MAX_LEVEL, head_);
 
-  for (int i = level_ - 1; i >= 0; --i) {
+  for (int32_t i = static_cast<int32_t>(level_ - 1); i >= 0; --i) {
     while (node->forward_[i] && cmp_.Less(node->forward_[i]->key_, key)) {
       node = node->forward_[i];
     }
-    assert(i < update.size());
+    assert(i < static_cast<int32_t>(update.size()));
     update[i] = node;
   }
 
   size_t delete_level = delete_node->level_;
-  for (int i = 0; i < delete_level; ++i) {
+  for (size_t i = 0; i < delete_level; ++i) {
     update[i]->forward_[i] = delete_node->forward_[i];
   }
   
@@ -161,6 +161,7 @@ bool SkipList<K, V>::Clear() {
   // reset head node 
   head_ = std::make_shared<Node<K, V>>(K(), V(), MAX_LEVEL);
   level_ = 0;
+  return true;
 }
 
 }

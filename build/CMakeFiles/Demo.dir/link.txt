@@ -1,1 +1,1 @@
-/usr/bin/c++    -rdynamic CMakeFiles/Demo.dir/main.cc.o  -o Demo 
+/usr/bin/c++   -O0 -Wall -g -ggdb  -rdynamic CMakeFiles/Demo.dir/main.cc.o CMakeFiles/Demo.dir/test/test.cc.o CMakeFiles/Demo.dir/basic/slice.cc.o  -o Demo 

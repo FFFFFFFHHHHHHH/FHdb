@@ -123,6 +123,33 @@ Demo/fast:
 	$(MAKE) -f CMakeFiles/Demo.dir/build.make CMakeFiles/Demo.dir/build
 .PHONY : Demo/fast
 
+basic/slice.o: basic/slice.cc.o
+
+.PHONY : basic/slice.o
+
+# target to build an object file
+basic/slice.cc.o:
+	$(MAKE) -f CMakeFiles/Demo.dir/build.make CMakeFiles/Demo.dir/basic/slice.cc.o
+.PHONY : basic/slice.cc.o
+
+basic/slice.i: basic/slice.cc.i
+
+.PHONY : basic/slice.i
+
+# target to preprocess a source file
+basic/slice.cc.i:
+	$(MAKE) -f CMakeFiles/Demo.dir/build.make CMakeFiles/Demo.dir/basic/slice.cc.i
+.PHONY : basic/slice.cc.i
+
+basic/slice.s: basic/slice.cc.s
+
+.PHONY : basic/slice.s
+
+# target to generate assembly for a file
+basic/slice.cc.s:
+	$(MAKE) -f CMakeFiles/Demo.dir/build.make CMakeFiles/Demo.dir/basic/slice.cc.s
+.PHONY : basic/slice.cc.s
+
 main.o: main.cc.o
 
 .PHONY : main.o
@@ -150,6 +177,33 @@ main.cc.s:
 	$(MAKE) -f CMakeFiles/Demo.dir/build.make CMakeFiles/Demo.dir/main.cc.s
 .PHONY : main.cc.s
 
+test/test.o: test/test.cc.o
+
+.PHONY : test/test.o
+
+# target to build an object file
+test/test.cc.o:
+	$(MAKE) -f CMakeFiles/Demo.dir/build.make CMakeFiles/Demo.dir/test/test.cc.o
+.PHONY : test/test.cc.o
+
+test/test.i: test/test.cc.i
+
+.PHONY : test/test.i
+
+# target to preprocess a source file
+test/test.cc.i:
+	$(MAKE) -f CMakeFiles/Demo.dir/build.make CMakeFiles/Demo.dir/test/test.cc.i
+.PHONY : test/test.cc.i
+
+test/test.s: test/test.cc.s
+
+.PHONY : test/test.s
+
+# target to generate assembly for a file
+test/test.cc.s:
+	$(MAKE) -f CMakeFiles/Demo.dir/build.make CMakeFiles/Demo.dir/test/test.cc.s
+.PHONY : test/test.cc.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -159,9 +213,15 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... Demo"
 	@echo "... edit_cache"
+	@echo "... basic/slice.o"
+	@echo "... basic/slice.i"
+	@echo "... basic/slice.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... test/test.o"
+	@echo "... test/test.i"
+	@echo "... test/test.s"
 .PHONY : help
 
 

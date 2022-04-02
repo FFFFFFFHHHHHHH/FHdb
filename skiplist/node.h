@@ -8,10 +8,10 @@
 
 namespace FHdb {
 
-// test memory
-int cnt_delete = 0;
-int cnt_new = 0;
+extern int cnt_delete;
+extern int cnt_new;
 
+// test memory
 template <typename K, typename V>
 class Node {
 public:

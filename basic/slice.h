@@ -10,7 +10,7 @@ namespace FHdb {
 class Slice {
 
 public:
-  Slice() : data_(""), size_(0) {}
+  Slice() : data_(""), size_(0), is_compress_(0) {}
 
   Slice(const char* data, size_t size) : data_(std::string(data, size)), size_(size) {}
 
@@ -18,7 +18,7 @@ public:
 
   Slice(const std::string& str) : data_(str), size_(str.size()) {}
 
-  Slice(int rhs) {
+  Slice(int64_t rhs) {
     data_ = std::to_string(rhs);
     size_ = data_.size();
   }
@@ -46,7 +46,7 @@ public:
   }
 
   std::string ToString() const {
-    return std::string(data_, size_);
+    return data_;
   }
 
   void remove_prefix(size_t n) {
@@ -59,9 +59,13 @@ public:
     return (x.size_ <= size_) && (memcmp(data_.data(), x.data_.data(), x.size_));
   }
 
+  bool is_compress() {
+    return is_compress_;
+  }
+
   int compare(const Slice& x) const {
     size_t min_len = std::min(size_, x.size_);
-    for (int i = 0; i < min_len; i++) {
+    for (size_t i = 0; i < min_len; i++) {
       if (data_[i] != x.data_[i]) {
         return data_[i] < x.data_[i] ? -1 : 1;
       }
@@ -72,7 +76,7 @@ public:
 
 
   bool operator == (const Slice& rhs) {
-    return (size_ == rhs.size_)
+    return (is_compress_ == rhs.is_compress_) && (size_ == rhs.size_)
                   && (memcmp(data_.data(), rhs.data_.data(), size_) == 0);
   }
 
@@ -80,9 +84,15 @@ public:
     return !(*this == rhs);
   }
 
+  void Compress();
+
+  void UnCompress();
+
 private:
+
   std::string data_;
   size_t size_;
+  bool is_compress_ = false;
 };
 
 }
