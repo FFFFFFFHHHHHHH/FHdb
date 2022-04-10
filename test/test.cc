@@ -3,6 +3,7 @@
 
 namespace FHdb {
 
+// test memory
 extern int cnt_delete;
 extern int cnt_new;
 
