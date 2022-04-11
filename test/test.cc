@@ -1,4 +1,5 @@
 #include "test.h"
+#include "../log/Logging.h"
 #include <iostream>
 
 namespace FHdb {
@@ -7,7 +8,10 @@ namespace FHdb {
 extern int cnt_delete;
 extern int cnt_new;
 
-#define ERROR success = 0;
+#define ERROR do{     \
+  LOG << "error!\n";  \
+  success = 0;        \
+} while(0);           \
 
 void test_skiplist_int() {
   bool success = true;
@@ -63,7 +67,7 @@ void test_skiplist_int() {
   sk.Clear();
   assert(cnt_new - cnt_delete == 1);
   assert(sk.Empty() == true);
-  std::cerr << (success ? "TRUE" : "FALSE") << " in int test" << std::endl;
+  LOG << (success ? "TRUE" : "FALSE") << " in int test\n";
 }
 
 void test_skiplist_slice() {
@@ -78,10 +82,10 @@ void test_skiplist_slice() {
     auto ptr = sk.Find(i);
     if (!ptr) {
       ERROR
-      std::cerr << "cnt find" << std::endl;
+      LOG << "cnt find\n";
     }
     else if (ptr->value_ != i) {
-      std::cerr << "value: " << ptr->value_.ToString();
+      LOG << "value: " << ptr->value_.ToString();
     }
   }
 
@@ -125,7 +129,7 @@ void test_skiplist_slice() {
   sk.Clear();
   assert(cnt_new - cnt_delete == 1);
   assert(sk.Empty() == true);
-  std::cerr << (success ? "TRUE" : "FALSE") << " in slice test" << std::endl;
+  LOG << (success ? "TRUE" : "FALSE") << " in slice test\n";
 }
 
 void test_slice_compress() {
@@ -157,13 +161,20 @@ void test_slice_compress() {
     assert(B == a);
   }
 
-  std::cerr << (success ? "TRUE" : "FALSE") << " test_slice_compress" << std::endl;
+  LOG << (success ? "TRUE" : "FALSE") << " test_slice_compress\n";
+}
+
+void test_log() {
+  for (int i = 1; i <= 10000; i++) {
+    LOG << i << "\n";
+  }
 }
 
 void TEST() {
   test_slice_compress();
   test_skiplist_int();
   test_skiplist_slice();
+  // test_log();
 }
 
 }

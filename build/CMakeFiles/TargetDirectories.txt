@@ -1,3 +1,6 @@
 /root/work/project/FHdb/build/CMakeFiles/rebuild_cache.dir
-/root/work/project/FHdb/build/CMakeFiles/Demo.dir
+/root/work/project/FHdb/build/CMakeFiles/FHdb.dir
 /root/work/project/FHdb/build/CMakeFiles/edit_cache.dir
+/root/work/project/FHdb/build/log/CMakeFiles/rebuild_cache.dir
+/root/work/project/FHdb/build/log/CMakeFiles/LOG.dir
+/root/work/project/FHdb/build/log/CMakeFiles/edit_cache.dir

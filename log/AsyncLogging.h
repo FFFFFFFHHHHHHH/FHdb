@@ -17,12 +17,12 @@ public:
 
   ~AsyncLogging();
 
-  static AsyncLogging* single() {
-    static AsyncLogging* single_ptr = new AsyncLogging();
+  static AsyncLogging* single(const std::string& file_name = "db_log") {
+    static AsyncLogging* single_ptr = new AsyncLogging(file_name);
     return single_ptr;
   }
 
-  AsyncLogging(const std::string file_name = "log");
+  AsyncLogging(const std::string file_name);
 
   void stop();
 

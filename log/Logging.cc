@@ -1,7 +1,7 @@
 #include "Logging.h"
 
 Logging::Logging(const char* file_name, int line) : 
-  LogFilePath_("log"){
+  LogFilePath_("db_log"){
   AddTime();
   stream_ << "(" << file_name << ":" << line << ")\n";
 }
@@ -13,7 +13,7 @@ void Logging::AddTime() {
   gettimeofday(&tv, NULL);
   time = tv.tv_sec;
   struct tm* p_time = localtime(&time);
-  strftime(str_t, 26, "%Y-%m-%d %H:%M:%S\n", p_time);
+  strftime(str_t, 26, "%Y-%m-%d %H:%M:%S    ", p_time);
   stream_ << str_t;
 }
 

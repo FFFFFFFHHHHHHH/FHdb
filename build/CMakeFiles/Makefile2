@@ -60,39 +60,94 @@ CMAKE_SOURCE_DIR = /root/work/project/FHdb
 CMAKE_BINARY_DIR = /root/work/project/FHdb/build
 
 #=============================================================================
-# Target rules for target CMakeFiles/Demo.dir
+# Target rules for target CMakeFiles/FHdb.dir
 
 # All Build rule for target.
-CMakeFiles/Demo.dir/all:
-	$(MAKE) -f CMakeFiles/Demo.dir/build.make CMakeFiles/Demo.dir/depend
-	$(MAKE) -f CMakeFiles/Demo.dir/build.make CMakeFiles/Demo.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/work/project/FHdb/build/CMakeFiles --progress-num=1,2,3,4 "Built target Demo"
-.PHONY : CMakeFiles/Demo.dir/all
+CMakeFiles/FHdb.dir/all: log/CMakeFiles/LOG.dir/all
+	$(MAKE) -f CMakeFiles/FHdb.dir/build.make CMakeFiles/FHdb.dir/depend
+	$(MAKE) -f CMakeFiles/FHdb.dir/build.make CMakeFiles/FHdb.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/work/project/FHdb/build/CMakeFiles --progress-num=1,2,3,4 "Built target FHdb"
+.PHONY : CMakeFiles/FHdb.dir/all
 
 # Include target in all.
-all: CMakeFiles/Demo.dir/all
+all: CMakeFiles/FHdb.dir/all
 
 .PHONY : all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/Demo.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /root/work/project/FHdb/build/CMakeFiles 4
-	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/Demo.dir/all
+CMakeFiles/FHdb.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/work/project/FHdb/build/CMakeFiles 10
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/FHdb.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /root/work/project/FHdb/build/CMakeFiles 0
-.PHONY : CMakeFiles/Demo.dir/rule
+.PHONY : CMakeFiles/FHdb.dir/rule
 
 # Convenience name for target.
-Demo: CMakeFiles/Demo.dir/rule
+FHdb: CMakeFiles/FHdb.dir/rule
 
-.PHONY : Demo
-
-# clean rule for target.
-CMakeFiles/Demo.dir/clean:
-	$(MAKE) -f CMakeFiles/Demo.dir/build.make CMakeFiles/Demo.dir/clean
-.PHONY : CMakeFiles/Demo.dir/clean
+.PHONY : FHdb
 
 # clean rule for target.
-clean: CMakeFiles/Demo.dir/clean
+CMakeFiles/FHdb.dir/clean:
+	$(MAKE) -f CMakeFiles/FHdb.dir/build.make CMakeFiles/FHdb.dir/clean
+.PHONY : CMakeFiles/FHdb.dir/clean
+
+# clean rule for target.
+clean: CMakeFiles/FHdb.dir/clean
+
+.PHONY : clean
+
+#=============================================================================
+# Directory level rules for directory log
+
+# Convenience name for "all" pass in the directory.
+log/all: log/CMakeFiles/LOG.dir/all
+
+.PHONY : log/all
+
+# Convenience name for "clean" pass in the directory.
+log/clean: log/CMakeFiles/LOG.dir/clean
+
+.PHONY : log/clean
+
+# Convenience name for "preinstall" pass in the directory.
+log/preinstall:
+
+.PHONY : log/preinstall
+
+#=============================================================================
+# Target rules for target log/CMakeFiles/LOG.dir
+
+# All Build rule for target.
+log/CMakeFiles/LOG.dir/all:
+	$(MAKE) -f log/CMakeFiles/LOG.dir/build.make log/CMakeFiles/LOG.dir/depend
+	$(MAKE) -f log/CMakeFiles/LOG.dir/build.make log/CMakeFiles/LOG.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/root/work/project/FHdb/build/CMakeFiles --progress-num=5,6,7,8,9,10 "Built target LOG"
+.PHONY : log/CMakeFiles/LOG.dir/all
+
+# Include target in all.
+all: log/CMakeFiles/LOG.dir/all
+
+.PHONY : all
+
+# Build rule for subdir invocation for target.
+log/CMakeFiles/LOG.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/work/project/FHdb/build/CMakeFiles 6
+	$(MAKE) -f CMakeFiles/Makefile2 log/CMakeFiles/LOG.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/work/project/FHdb/build/CMakeFiles 0
+.PHONY : log/CMakeFiles/LOG.dir/rule
+
+# Convenience name for target.
+LOG: log/CMakeFiles/LOG.dir/rule
+
+.PHONY : LOG
+
+# clean rule for target.
+log/CMakeFiles/LOG.dir/clean:
+	$(MAKE) -f log/CMakeFiles/LOG.dir/build.make log/CMakeFiles/LOG.dir/clean
+.PHONY : log/CMakeFiles/LOG.dir/clean
+
+# clean rule for target.
+clean: log/CMakeFiles/LOG.dir/clean
 
 .PHONY : clean
 

@@ -111,17 +111,30 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named Demo
+# Target rules for targets named FHdb
 
 # Build rule for target.
-Demo: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 Demo
-.PHONY : Demo
+FHdb: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 FHdb
+.PHONY : FHdb
 
 # fast build rule for target.
-Demo/fast:
-	$(MAKE) -f CMakeFiles/Demo.dir/build.make CMakeFiles/Demo.dir/build
-.PHONY : Demo/fast
+FHdb/fast:
+	$(MAKE) -f CMakeFiles/FHdb.dir/build.make CMakeFiles/FHdb.dir/build
+.PHONY : FHdb/fast
+
+#=============================================================================
+# Target rules for targets named LOG
+
+# Build rule for target.
+LOG: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 LOG
+.PHONY : LOG
+
+# fast build rule for target.
+LOG/fast:
+	$(MAKE) -f log/CMakeFiles/LOG.dir/build.make log/CMakeFiles/LOG.dir/build
+.PHONY : LOG/fast
 
 basic/slice.o: basic/slice.cc.o
 
@@ -129,7 +142,7 @@ basic/slice.o: basic/slice.cc.o
 
 # target to build an object file
 basic/slice.cc.o:
-	$(MAKE) -f CMakeFiles/Demo.dir/build.make CMakeFiles/Demo.dir/basic/slice.cc.o
+	$(MAKE) -f CMakeFiles/FHdb.dir/build.make CMakeFiles/FHdb.dir/basic/slice.cc.o
 .PHONY : basic/slice.cc.o
 
 basic/slice.i: basic/slice.cc.i
@@ -138,7 +151,7 @@ basic/slice.i: basic/slice.cc.i
 
 # target to preprocess a source file
 basic/slice.cc.i:
-	$(MAKE) -f CMakeFiles/Demo.dir/build.make CMakeFiles/Demo.dir/basic/slice.cc.i
+	$(MAKE) -f CMakeFiles/FHdb.dir/build.make CMakeFiles/FHdb.dir/basic/slice.cc.i
 .PHONY : basic/slice.cc.i
 
 basic/slice.s: basic/slice.cc.s
@@ -147,7 +160,7 @@ basic/slice.s: basic/slice.cc.s
 
 # target to generate assembly for a file
 basic/slice.cc.s:
-	$(MAKE) -f CMakeFiles/Demo.dir/build.make CMakeFiles/Demo.dir/basic/slice.cc.s
+	$(MAKE) -f CMakeFiles/FHdb.dir/build.make CMakeFiles/FHdb.dir/basic/slice.cc.s
 .PHONY : basic/slice.cc.s
 
 main.o: main.cc.o
@@ -156,7 +169,7 @@ main.o: main.cc.o
 
 # target to build an object file
 main.cc.o:
-	$(MAKE) -f CMakeFiles/Demo.dir/build.make CMakeFiles/Demo.dir/main.cc.o
+	$(MAKE) -f CMakeFiles/FHdb.dir/build.make CMakeFiles/FHdb.dir/main.cc.o
 .PHONY : main.cc.o
 
 main.i: main.cc.i
@@ -165,7 +178,7 @@ main.i: main.cc.i
 
 # target to preprocess a source file
 main.cc.i:
-	$(MAKE) -f CMakeFiles/Demo.dir/build.make CMakeFiles/Demo.dir/main.cc.i
+	$(MAKE) -f CMakeFiles/FHdb.dir/build.make CMakeFiles/FHdb.dir/main.cc.i
 .PHONY : main.cc.i
 
 main.s: main.cc.s
@@ -174,7 +187,7 @@ main.s: main.cc.s
 
 # target to generate assembly for a file
 main.cc.s:
-	$(MAKE) -f CMakeFiles/Demo.dir/build.make CMakeFiles/Demo.dir/main.cc.s
+	$(MAKE) -f CMakeFiles/FHdb.dir/build.make CMakeFiles/FHdb.dir/main.cc.s
 .PHONY : main.cc.s
 
 test/test.o: test/test.cc.o
@@ -183,7 +196,7 @@ test/test.o: test/test.cc.o
 
 # target to build an object file
 test/test.cc.o:
-	$(MAKE) -f CMakeFiles/Demo.dir/build.make CMakeFiles/Demo.dir/test/test.cc.o
+	$(MAKE) -f CMakeFiles/FHdb.dir/build.make CMakeFiles/FHdb.dir/test/test.cc.o
 .PHONY : test/test.cc.o
 
 test/test.i: test/test.cc.i
@@ -192,7 +205,7 @@ test/test.i: test/test.cc.i
 
 # target to preprocess a source file
 test/test.cc.i:
-	$(MAKE) -f CMakeFiles/Demo.dir/build.make CMakeFiles/Demo.dir/test/test.cc.i
+	$(MAKE) -f CMakeFiles/FHdb.dir/build.make CMakeFiles/FHdb.dir/test/test.cc.i
 .PHONY : test/test.cc.i
 
 test/test.s: test/test.cc.s
@@ -201,7 +214,7 @@ test/test.s: test/test.cc.s
 
 # target to generate assembly for a file
 test/test.cc.s:
-	$(MAKE) -f CMakeFiles/Demo.dir/build.make CMakeFiles/Demo.dir/test/test.cc.s
+	$(MAKE) -f CMakeFiles/FHdb.dir/build.make CMakeFiles/FHdb.dir/test/test.cc.s
 .PHONY : test/test.cc.s
 
 # Help Target
@@ -211,8 +224,9 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... rebuild_cache"
-	@echo "... Demo"
+	@echo "... FHdb"
 	@echo "... edit_cache"
+	@echo "... LOG"
 	@echo "... basic/slice.o"
 	@echo "... basic/slice.i"
 	@echo "... basic/slice.s"

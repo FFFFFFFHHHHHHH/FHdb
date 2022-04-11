@@ -3,6 +3,8 @@
 #include "skiplist/skiplist.h"
 #include "skiplist/node.h"
 #include "test/test.h"
+#include "log/Logging.h"
+
 #include <iostream>
 
 namespace FHdb {
@@ -14,6 +16,7 @@ int cnt_new = 0;
 
 int main() {
   FHdb::TEST();
+  sleep(2);
   return 0;
 }
 
