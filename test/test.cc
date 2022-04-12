@@ -1,15 +1,16 @@
 #include "test.h"
 #include "../log/Logging.h"
+#include "../db/db.h"
 #include <iostream>
 
 namespace FHdb {
 
 // test memory
-extern int cnt_delete;
-extern int cnt_new;
+// int cnt_delete;
+// int cnt_new;
 
 #define ERROR do{     \
-  LOG << "error!\n";  \
+  LOG << "error!";    \
   success = 0;        \
 } while(0);           \
 
@@ -28,7 +29,7 @@ void test_skiplist_int() {
   }
 
   sk.Clear();
-  assert(cnt_new - cnt_delete == 1); // test Clear
+  assert(ALIVE_NODE_INT == 0); // test Clear
   assert(sk.Empty() == true); // test Empty
 
   srand(time(0));
@@ -43,7 +44,7 @@ void test_skiplist_int() {
     else if (ptr->value_ != i + rnd) ERROR
   }
   sk.Clear();
-  assert(cnt_new - cnt_delete == 1); // test Clear
+  assert(ALIVE_NODE_INT == 0); // test Clear
   assert(sk.Empty() == true); // test Empty
 
   // test delete
@@ -65,9 +66,9 @@ void test_skiplist_int() {
     if (!(v >= 20 && v <= 30)) ERROR
   }
   sk.Clear();
-  assert(cnt_new - cnt_delete == 1);
+  assert(ALIVE_NODE_INT == 0);
   assert(sk.Empty() == true);
-  LOG << (success ? "TRUE" : "FALSE") << " in int test\n";
+  LOG << (success ? "TRUE" : "FALSE") << " in int test";
 }
 
 void test_skiplist_slice() {
@@ -90,7 +91,7 @@ void test_skiplist_slice() {
   }
 
   sk.Clear();
-  assert(cnt_new - cnt_delete == 1); // test Clear
+  assert(ALIVE_NODE == 0); // test Clear
   assert(sk.Empty() == true); // test Empty
   
   srand(time(0));
@@ -105,7 +106,7 @@ void test_skiplist_slice() {
     else if (ptr->value_ != i + rnd) ERROR
    }
   sk.Clear();
-  assert(cnt_new - cnt_delete == 1); 
+  assert(ALIVE_NODE == 0); 
   assert(sk.Empty() == true); 
   
   // test delete
@@ -127,9 +128,9 @@ void test_skiplist_slice() {
     if (!(v >= 20 && v <= 30)) ERROR
   }
   sk.Clear();
-  assert(cnt_new - cnt_delete == 1);
+  assert(ALIVE_NODE == 0);
   assert(sk.Empty() == true);
-  LOG << (success ? "TRUE" : "FALSE") << " in slice test\n";
+  LOG << (success ? "TRUE" : "FALSE") << " in slice test";
 }
 
 void test_slice_compress() {
@@ -161,13 +162,38 @@ void test_slice_compress() {
     assert(B == a);
   }
 
-  LOG << (success ? "TRUE" : "FALSE") << " test_slice_compress\n";
+  LOG << (success ? "TRUE" : "FALSE") << " test_slice_compress";
 }
 
 void test_log() {
   for (int i = 1; i <= 10000; i++) {
-    LOG << i << "\n";
+    LOG << i;
   }
+}
+
+void test_db() {
+  // test command
+  bool success = true;
+  auto ptr = FHdb::DataBase::single();
+  // ptr->ParseTheCommand("  set a 1 2 3");
+  // if (ptr->CommandToString() != "set a 1 2 3") ERROR
+  // ptr->ParseTheCommand(" DeLet  a asdklfj asd i1   1      2 | 3");
+  // if (ptr->CommandToString() != "delet a asdklfj asd i1 1 2 | 3") ERROR
+
+  while (true) {
+    printf(">");
+    std::string cmd;
+    std::getline(std::cin, cmd);
+    ptr->ParseTheCommand(cmd);
+    printf("error: %d\n", ptr->error());
+    printf("message: %s\n", ptr->message().c_str());
+    if (ptr->error() == 2) {
+      break;
+    }
+  }
+
+
+  LOG << (success ? "TRUE" : "FALSE") << " test_db";
 }
 
 void TEST() {
@@ -175,6 +201,7 @@ void TEST() {
   test_skiplist_int();
   test_skiplist_slice();
   // test_log();
+  test_db();
 }
 
 }

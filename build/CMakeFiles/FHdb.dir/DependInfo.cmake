@@ -5,6 +5,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
   "/root/work/project/FHdb/basic/slice.cc" "/root/work/project/FHdb/build/CMakeFiles/FHdb.dir/basic/slice.cc.o"
+  "/root/work/project/FHdb/db/db.cc" "/root/work/project/FHdb/build/CMakeFiles/FHdb.dir/db/db.cc.o"
   "/root/work/project/FHdb/main.cc" "/root/work/project/FHdb/build/CMakeFiles/FHdb.dir/main.cc.o"
   "/root/work/project/FHdb/test/test.cc" "/root/work/project/FHdb/build/CMakeFiles/FHdb.dir/test/test.cc.o"
   )

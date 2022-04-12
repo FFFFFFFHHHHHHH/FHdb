@@ -4,8 +4,25 @@
 CMakeFiles/FHdb.dir/basic/slice.cc.o: ../basic/slice.cc
 CMakeFiles/FHdb.dir/basic/slice.cc.o: ../basic/slice.h
 
+CMakeFiles/FHdb.dir/db/db.cc.o: ../basic/comparator.h
+CMakeFiles/FHdb.dir/db/db.cc.o: ../basic/slice.h
+CMakeFiles/FHdb.dir/db/db.cc.o: ../db/db.cc
+CMakeFiles/FHdb.dir/db/db.cc.o: ../db/db.h
+CMakeFiles/FHdb.dir/db/db.cc.o: ../log/AsyncLogging.h
+CMakeFiles/FHdb.dir/db/db.cc.o: ../log/FileUtil.h
+CMakeFiles/FHdb.dir/db/db.cc.o: ../log/LogFile.h
+CMakeFiles/FHdb.dir/db/db.cc.o: ../log/LogStream.h
+CMakeFiles/FHdb.dir/db/db.cc.o: ../log/Logging.h
+CMakeFiles/FHdb.dir/db/db.cc.o: ../log/noncopyable.h
+CMakeFiles/FHdb.dir/db/db.cc.o: ../skiplist/node.h
+CMakeFiles/FHdb.dir/db/db.cc.o: ../skiplist/random.h
+CMakeFiles/FHdb.dir/db/db.cc.o: ../skiplist/skiplist.h
+CMakeFiles/FHdb.dir/db/db.cc.o: ../test/test.h
+CMakeFiles/FHdb.dir/db/db.cc.o: ../util/util.h
+
 CMakeFiles/FHdb.dir/main.cc.o: ../basic/comparator.h
 CMakeFiles/FHdb.dir/main.cc.o: ../basic/slice.h
+CMakeFiles/FHdb.dir/main.cc.o: ../db/db.h
 CMakeFiles/FHdb.dir/main.cc.o: ../log/AsyncLogging.h
 CMakeFiles/FHdb.dir/main.cc.o: ../log/FileUtil.h
 CMakeFiles/FHdb.dir/main.cc.o: ../log/LogFile.h
@@ -17,9 +34,11 @@ CMakeFiles/FHdb.dir/main.cc.o: ../skiplist/node.h
 CMakeFiles/FHdb.dir/main.cc.o: ../skiplist/random.h
 CMakeFiles/FHdb.dir/main.cc.o: ../skiplist/skiplist.h
 CMakeFiles/FHdb.dir/main.cc.o: ../test/test.h
+CMakeFiles/FHdb.dir/main.cc.o: ../util/util.h
 
 CMakeFiles/FHdb.dir/test/test.cc.o: ../basic/comparator.h
 CMakeFiles/FHdb.dir/test/test.cc.o: ../basic/slice.h
+CMakeFiles/FHdb.dir/test/test.cc.o: ../db/db.h
 CMakeFiles/FHdb.dir/test/test.cc.o: ../log/AsyncLogging.h
 CMakeFiles/FHdb.dir/test/test.cc.o: ../log/FileUtil.h
 CMakeFiles/FHdb.dir/test/test.cc.o: ../log/LogFile.h
@@ -31,4 +50,5 @@ CMakeFiles/FHdb.dir/test/test.cc.o: ../skiplist/random.h
 CMakeFiles/FHdb.dir/test/test.cc.o: ../skiplist/skiplist.h
 CMakeFiles/FHdb.dir/test/test.cc.o: ../test/test.cc
 CMakeFiles/FHdb.dir/test/test.cc.o: ../test/test.h
+CMakeFiles/FHdb.dir/test/test.cc.o: ../util/util.h
 

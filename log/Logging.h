@@ -19,10 +19,12 @@ public:
 
 private:
 
+  const char* file_name_;
+
+  int line_;
+
   void AddTime();
 
   LogStream stream_;
-
-  std::string LogFilePath_;
 
 };

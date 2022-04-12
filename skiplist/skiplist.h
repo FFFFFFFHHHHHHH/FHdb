@@ -1,6 +1,7 @@
 #pragma once
 #include "../basic/slice.h"
 #include "../basic/comparator.h"
+#include "../test/test.h"
 #include "node.h"
 #include "random.h"
 #include <iostream>
@@ -15,14 +16,22 @@ public:
   SkipList();
 
   std::shared_ptr<Node<K, V>> Find(const K& key);
+
+  std::vector<std::shared_ptr<Node<K, V>>> Find(const std::vector<K>& keys);
   
   bool Insert(const K& key, const V& value);
 
+  std::vector<bool> Insert(const std::vector<K>& keys);
+
   bool Delete(const K& key);
+
+  void Delete(const std::vector<K>& keys);
 
   bool Clear();
 
   bool Empty();
+
+  std::vector<std::shared_ptr<Node<K, V>>> show();
 
 private:
   std::shared_ptr<Node<K, V>> CreateNode(const K& key, const V& value, const size_t& level);
@@ -30,7 +39,7 @@ private:
   size_t GetRandomLevel();
 
 private:
-  std::shared_ptr<Node<K,V>> head_;
+  std::shared_ptr<Node<K, V>> head_;
   size_t level_;
   size_t node_cnt_;
   constexpr static size_t MAX_LEVEL = 20;
@@ -72,6 +81,15 @@ std::shared_ptr<Node<K, V>> SkipList<K, V>::Find(const K& key) {
 }
 
 template <typename K, typename V>
+std::vector<std::shared_ptr<Node<K, V>>> SkipList<K, V>::Find(const std::vector<K>& keys) {
+  std::vector<std::shared_ptr<Node<K, V>>> results_;
+  for (const auto& key : keys) {
+    results_.push_back(Find(key));
+  }
+  return results_;
+}
+
+template <typename K, typename V>
 bool SkipList<K, V>::Insert(const K& key, const V& value) {
   // std::cerr << "start find" << std::endl;
   if (Find(key)) {
@@ -110,6 +128,16 @@ bool SkipList<K, V>::Insert(const K& key, const V& value) {
 }
 
 template <typename K, typename V>
+std::vector<bool> SkipList<K, V>::Insert(const std::vector<K>& keys) {
+  assert(keys.size() % 2 == 0);
+  std::vector<bool> success(keys.size() / 2);
+  for (size_t i = 0; i < keys.size(); i += 2) {
+    success[i/2] = Insert(keys[i], keys[i + 1]);
+  }
+  return success;
+}
+
+template <typename K, typename V>
 bool SkipList<K, V>::Delete(const K& key) {
   auto delete_node = Find(key);
   if (!delete_node) {
@@ -138,6 +166,16 @@ bool SkipList<K, V>::Delete(const K& key) {
 }
 
 template <typename K, typename V>
+void SkipList<K, V>::Delete(const std::vector<K>& keys) {
+  assert(keys.size() != 0);
+  for (const auto& key : keys) {
+    Delete(key);
+  }
+  return ;
+}
+
+
+template <typename K, typename V>
 size_t SkipList<K, V>::GetRandomLevel() {
   size_t level = static_cast<size_t>(rnd_.Uniform(MAX_LEVEL));
   return level + 1;
@@ -162,6 +200,18 @@ bool SkipList<K, V>::Clear() {
   head_ = std::make_shared<Node<K, V>>(K(), V(), MAX_LEVEL);
   level_ = 0;
   return true;
+}
+
+template <typename K, typename V>
+std::vector<std::shared_ptr<Node<K, V>>> SkipList<K, V>::show() {
+  std::vector<std::shared_ptr<Node<K, V>>> results;
+  assert(head_);
+  auto node = head_->forward_[0];
+  while (node) {
+    results.push_back(node);
+    node = node->forward_[0];
+  }
+  return results;
 }
 
 }

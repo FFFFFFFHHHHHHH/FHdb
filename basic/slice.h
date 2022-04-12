@@ -12,20 +12,31 @@ class Slice {
 public:
   Slice() : data_(""), size_(0), is_compress_(0) {}
 
-  Slice(const char* data, size_t size) : data_(std::string(data, size)), size_(size) {}
+  Slice(const char* data, size_t size) : 
+    data_(std::string(data, size)), size_(size), is_compress_(0) {}
 
-  Slice(const char* data) : data_(std::string(data, strlen(data))), size_(strlen(data)) {}
+  Slice(const char* data) : 
+    data_(std::string(data, strlen(data))), size_(strlen(data)), is_compress_(0) {}
 
-  Slice(const std::string& str) : data_(str), size_(str.size()) {}
+  Slice(const std::string& str) : 
+    data_(str), size_(str.size()), is_compress_(0) {}
 
   Slice(int64_t rhs) {
     data_ = std::to_string(rhs);
     size_ = data_.size();
+    is_compress_ = 0;
   }
 
-  Slice(const Slice& rhs) : data_(rhs.data_), size_(rhs.size_) {}
+  Slice(const Slice& rhs) : data_(rhs.data_), size_(rhs.size_), is_compress_(rhs.is_compress_) {}
   
-  Slice& operator = (const Slice& rhs) = delete;
+  Slice& operator = (const Slice& rhs) {
+    if (this != &rhs) {
+      data_ = rhs.data_;
+      size_ = rhs.size_;
+      is_compress_ = rhs.is_compress_;
+    }
+    return *this;
+  }
 
   size_t size() {
     return size_;

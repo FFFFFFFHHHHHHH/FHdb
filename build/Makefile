@@ -163,6 +163,33 @@ basic/slice.cc.s:
 	$(MAKE) -f CMakeFiles/FHdb.dir/build.make CMakeFiles/FHdb.dir/basic/slice.cc.s
 .PHONY : basic/slice.cc.s
 
+db/db.o: db/db.cc.o
+
+.PHONY : db/db.o
+
+# target to build an object file
+db/db.cc.o:
+	$(MAKE) -f CMakeFiles/FHdb.dir/build.make CMakeFiles/FHdb.dir/db/db.cc.o
+.PHONY : db/db.cc.o
+
+db/db.i: db/db.cc.i
+
+.PHONY : db/db.i
+
+# target to preprocess a source file
+db/db.cc.i:
+	$(MAKE) -f CMakeFiles/FHdb.dir/build.make CMakeFiles/FHdb.dir/db/db.cc.i
+.PHONY : db/db.cc.i
+
+db/db.s: db/db.cc.s
+
+.PHONY : db/db.s
+
+# target to generate assembly for a file
+db/db.cc.s:
+	$(MAKE) -f CMakeFiles/FHdb.dir/build.make CMakeFiles/FHdb.dir/db/db.cc.s
+.PHONY : db/db.cc.s
+
 main.o: main.cc.o
 
 .PHONY : main.o
@@ -230,6 +257,9 @@ help:
 	@echo "... basic/slice.o"
 	@echo "... basic/slice.i"
 	@echo "... basic/slice.s"
+	@echo "... db/db.o"
+	@echo "... db/db.i"
+	@echo "... db/db.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

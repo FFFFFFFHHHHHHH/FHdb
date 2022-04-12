@@ -1,1 +1,1 @@
-/usr/bin/c++   -O0 -Wall -g -ggdb -pthread  -rdynamic CMakeFiles/FHdb.dir/main.cc.o CMakeFiles/FHdb.dir/test/test.cc.o CMakeFiles/FHdb.dir/basic/slice.cc.o  -o FHdb log/libLOG.a 
+/usr/bin/c++   -O0 -Wall -g -ggdb -pthread  -rdynamic CMakeFiles/FHdb.dir/main.cc.o CMakeFiles/FHdb.dir/test/test.cc.o CMakeFiles/FHdb.dir/basic/slice.cc.o CMakeFiles/FHdb.dir/db/db.cc.o  -o FHdb log/libLOG.a 
