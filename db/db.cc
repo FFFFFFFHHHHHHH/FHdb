@@ -128,9 +128,18 @@ void DataBase::Show() {
     return ;
   }
   std::vector<std::shared_ptr<Node<Key, Value>>> nodes = db_->show();
-  assert(message_.size() == 0);
+
   // check memory
+#ifdef TEST_ON
   assert(db_->show().size() == ALIVE_NODE);
+  for (const auto& node : nodes) {
+    Slice k(node->key_.ToString());
+    Slice v(node->value_.ToString());
+    assert(dict_.count(k) == 0);
+    dict_[k] = v;
+  }
+#endif
+
   message_ += "[size: " + std::to_string(nodes.size()) + "]  ";
   for (const auto& node : nodes) {
     message_ += "(" + node->key_.ToString() + ',' + node->value_.ToString() + ") ";
@@ -153,8 +162,9 @@ void DataBase::Clear() {
     return ;
   }
   db_->Clear();
-#ifdef TEST_on
+#ifdef TEST_ON
   assert(db_->show().size() == ALIVE_NODE);
+  assert(ALIVE_NODE == 0);
 #endif
   error_ = 0;
   return ;
@@ -165,7 +175,7 @@ void DataBase::Get() {
     error_ = 4;
     return ;
   }
-#ifdef TEST_on
+#ifdef TEST_ON
   assert(db_->show().size() == ALIVE_NODE);
 #endif
   auto nodes = std::move(db_->Find(keys_));

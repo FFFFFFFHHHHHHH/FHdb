@@ -86,14 +86,21 @@ public:
   }
 
 
-  bool operator == (const Slice& rhs) {
+  bool operator == (const Slice& rhs) const {
     return (is_compress_ == rhs.is_compress_) && (size_ == rhs.size_)
                   && (memcmp(data_.data(), rhs.data_.data(), size_) == 0);
   }
 
-  bool operator != (const Slice& rhs) {
+  bool operator != (const Slice& rhs) const {
     return !(*this == rhs);
   }
+
+  bool operator < (const Slice& rhs) const {
+    return compare(rhs) < 0;
+  }
+  // bool operator < (const Slice& rhs) {
+  //   return compare(rhs) < 0;
+  // }
 
   void Compress();
 
@@ -105,5 +112,6 @@ private:
   size_t size_;
   bool is_compress_ = false;
 };
+
 
 }

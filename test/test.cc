@@ -9,12 +9,12 @@ namespace FHdb {
 // int cnt_delete;
 // int cnt_new;
 
-#define ERROR do{     \
-  LOG << "error!";    \
-  success = 0;        \
-} while(0);           \
+#define ERROR do{                   \
+  LOG << "error!  " << __LINE__;    \
+  success = 0;                      \
+} while(0);                         \
 
-void test_skiplist_int() {
+std::string test_skiplist_int() {
   bool success = true;
   SkipList<int, int> sk;
 
@@ -68,10 +68,12 @@ void test_skiplist_int() {
   sk.Clear();
   assert(ALIVE_NODE_INT == 0);
   assert(sk.Empty() == true);
-  LOG << (success ? "TRUE" : "FALSE") << " in int test";
+  std::string res = static_cast<std::string>(success ? "TRUE" : "FALSE") + " in int test";
+  LOG << res;
+  return res;
 }
 
-void test_skiplist_slice() {
+std::string test_skiplist_slice() {
   bool success = true;
   SkipList<Slice, Slice> sk; 
 
@@ -130,10 +132,12 @@ void test_skiplist_slice() {
   sk.Clear();
   assert(ALIVE_NODE == 0);
   assert(sk.Empty() == true);
-  LOG << (success ? "TRUE" : "FALSE") << " in slice test";
+  std::string res = static_cast<std::string>(success ? "TRUE" : "FALSE") + " in slice test";
+  LOG << res;
+  return res;
 }
 
-void test_slice_compress() {
+std::string test_slice_compress() {
   bool success = true;
   srand(time(0));
 
@@ -161,14 +165,73 @@ void test_slice_compress() {
     assert(A == b);
     assert(B == a);
   }
-
-  LOG << (success ? "TRUE" : "FALSE") << " test_slice_compress";
+  std::string res = static_cast<std::string>(success ? "TRUE" : "FALSE") + " test_slice_compress";
+  LOG << res;
+  return res;
 }
 
-void test_log() {
+std::string test_log() {
   for (int i = 1; i <= 10000; i++) {
     LOG << i;
   }
+  return "";
+}
+
+std::string test_db_pre() {
+  bool success = true;
+  auto ptr = FHdb::DataBase::single();
+  //
+  // test set
+  //
+  std::string sql = "set ";
+  for (int i = 1; i <= 1000; i++) {
+    sql += std::to_string(i) + " " + std::to_string(i) + " ";
+  }
+  ptr->ParseTheCommand(sql);
+  if (ALIVE_NODE != 1000) {
+    ERROR
+  }
+  ptr->ParseTheCommand("clear");
+  if (ALIVE_NODE != 0) {
+    ERROR
+  }
+
+  srand(time(0));
+  std::map<Slice, Slice> mp;
+  for (int i = 1; i <= 1000; i++) {
+    int k = rand(), v = rand();
+    if (i <= 3) {
+      k = v = 1;
+    }
+    std::string sql = "set " + std::to_string(k) + " " + std::to_string(v);
+    if (!mp.count(Slice(k))) {
+      mp[Slice(k)] = Slice(v);
+    }
+    ptr->ParseTheCommand(sql);
+  }
+  if (ALIVE_NODE != mp.size()) {
+    ERROR
+  }
+  ptr->ParseTheCommand("show");
+  auto dict = ptr->dict_;
+
+  if (dict.size() != mp.size()) {
+    ERROR
+  }
+
+  for (const auto& [k, v] : dict) {
+    if (mp[k] != v) {
+      ERROR
+    }
+  }
+  ptr->ParseTheCommand("clear");
+  if (ALIVE_NODE != 0) {
+    ERROR
+  }
+
+  std::string res = static_cast<std::string>(success ? "TRUE" : "FALSE") + " test_db_pre";
+  LOG << res;
+  return res;
 }
 
 void test_db() {
@@ -181,7 +244,7 @@ void test_db() {
   // if (ptr->CommandToString() != "delet a asdklfj asd i1 1 2 | 3") ERROR
 
   while (true) {
-    printf(">");
+    printf("> ");
     std::string cmd;
     std::getline(std::cin, cmd);
     ptr->ParseTheCommand(cmd);
@@ -197,9 +260,16 @@ void test_db() {
 }
 
 void TEST() {
-  test_slice_compress();
-  test_skiplist_int();
-  test_skiplist_slice();
+  std::vector<std::string> test_result;
+  test_result.push_back(test_slice_compress());
+  test_result.push_back(test_skiplist_int());
+  test_result.push_back(test_skiplist_slice());
+  test_result.push_back(test_db_pre());
+
+  for (const auto& result : test_result) {
+    std::cout << result << std::endl;
+  }
+
   // test_log();
   test_db();
 }

@@ -5,16 +5,12 @@
 
 #include <iostream>
 
-namespace FHdb {
-
-// int cnt_delete = 0;
-// int cnt_new = 0;
-
-}
-
 int main() {
+
+#ifdef TEST_ON
   FHdb::TEST();
-  sleep(2);
+#endif
+
   return 0;
 }
 

@@ -17,11 +17,17 @@ size_t AliveNode() {
 
 #define TEST_ON
 
-void test_skiplist_int();
+std::string test_skiplist_int();
 
-void test_skiplist_slice();
+std::string test_skiplist_slice();
 
-void test_slice_compress();
+std::string test_slice_compress();
+
+std::string test_db_pre();
+
+std::string test_log();
+
+void test_db();
 
 void TEST();
 

@@ -48,6 +48,8 @@ public:
     return error_;
   }
 
+  std::map<Slice, Slice> dict_; // just test
+
 private:
 
   inline void GetWord(size_t& pos, const std::string& str, std::string& temp);
