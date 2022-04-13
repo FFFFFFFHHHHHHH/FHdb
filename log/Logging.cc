@@ -1,9 +1,14 @@
 #include "Logging.h"
 
-Logging::Logging(const char* file_name, int line) : 
+Logging::Logging(const char* file_name, int line, const char* path) : 
   file_name_(file_name),
   line_(line) {
   AddTime();
+  async_log_ptr = AsyncLogging::db_log_single(path);
+}
+
+Logging::Logging(const char* path) {
+  async_log_ptr = AsyncLogging::aof_log_single(path);
 }
 
 void Logging::AddTime() {
@@ -18,7 +23,6 @@ void Logging::AddTime() {
 }
 
 Logging::~Logging() {
-  // stream_ << "             (" << file_name_ << ":" << line_ << ")\n";
   stream_ << "\n";
-  AsyncLogging::single()->Append(stream_.buffer().data(), stream_.buffer().length());
+  async_log_ptr->Append(stream_.buffer().data(), stream_.buffer().length());
 }

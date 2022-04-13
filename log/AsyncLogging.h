@@ -17,12 +17,22 @@ public:
 
   ~AsyncLogging();
 
-  static AsyncLogging* single(const std::string& file_name = "db_log") {
-    static AsyncLogging* single_ptr = new AsyncLogging(file_name);
+  static std::shared_ptr<AsyncLogging> db_log_single(const std::string& path = "db_log") {
+    static std::shared_ptr<AsyncLogging> single_ptr = std::make_shared<AsyncLogging>(path);
     return single_ptr;
   }
 
-  AsyncLogging(const std::string file_name);
+  // static AsyncLogging* db_log_single(const std::string& path = "db_log") {
+  //   static AsyncLogging* ptr = new AsyncLogging(path);
+  //   return ptr;
+  // }
+
+  static std::shared_ptr<AsyncLogging> aof_log_single(const std::string& path = "aof_log") {
+    static std::shared_ptr<AsyncLogging> single_ptr = std::make_shared<AsyncLogging>(path);
+    return single_ptr;
+  }
+
+  AsyncLogging(const std::string path);
 
   void stop();
 
@@ -38,7 +48,7 @@ private:
   Buffers buffers_;
   Buffers buffers_to_write_;
 
-  std::string file_name_;
+  std::string path_;
 
   std::mutex mutex_;
   std::condition_variable cv_;

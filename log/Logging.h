@@ -6,10 +6,20 @@
 
 #define LOG Logging(__FILE__, __LINE__).Stream()
 
+#define AOF Logging("aof_log").Stream()
+
 class Logging {
 
 public:
-  Logging(const char* file_name, int line);
+  Logging() = delete;
+
+  Logging(const Logging&) = delete;
+
+  Logging& operator = (const Logging&) = delete;
+  
+  Logging(const char* file_name, int line, const char* path = "db_log");
+
+  Logging(const char* path = "aof_log");
 
   ~Logging();
 
@@ -26,5 +36,7 @@ private:
   void AddTime();
 
   LogStream stream_;
+
+  std::shared_ptr<AsyncLogging> async_log_ptr;
 
 };

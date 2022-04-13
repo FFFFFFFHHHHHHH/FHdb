@@ -33,6 +33,10 @@ public:
 
   std::vector<std::shared_ptr<Node<K, V>>> show();
 
+  bool try_compress() const {
+    return try_compress_;
+  }
+
 private:
   std::shared_ptr<Node<K, V>> CreateNode(const K& key, const V& value, const size_t& level);
 
@@ -40,11 +44,19 @@ private:
 
 private:
   std::shared_ptr<Node<K, V>> head_;
+
   size_t level_;
+
   size_t node_cnt_;
+
   constexpr static size_t MAX_LEVEL = 20;
+
   Random rnd_;
+
   Comparator<K> cmp_;
+
+  bool try_compress_= true;
+
 };
 
 template <typename K, typename V>
@@ -58,6 +70,7 @@ template <typename K, typename V>
 SkipList<K, V>::SkipList() : rnd_(123456789) {
   head_ = CreateNode(K(), V(), MAX_LEVEL); // ???
   level_ = 0;
+  try_compress_ = true;
 }
 
 template <typename K, typename V>
@@ -83,7 +96,10 @@ std::shared_ptr<Node<K, V>> SkipList<K, V>::Find(const K& key) {
 template <typename K, typename V>
 std::vector<std::shared_ptr<Node<K, V>>> SkipList<K, V>::Find(const std::vector<K>& keys) {
   std::vector<std::shared_ptr<Node<K, V>>> results_;
-  for (const auto& key : keys) {
+  for (auto key : keys) {
+    if (try_compress_) {
+      key.UnCompress();
+    }
     results_.push_back(Find(key));
   }
   return results_;
@@ -132,7 +148,11 @@ std::vector<bool> SkipList<K, V>::Insert(const std::vector<K>& keys) {
   assert(keys.size() % 2 == 0);
   std::vector<bool> success(keys.size() / 2);
   for (size_t i = 0; i < keys.size(); i += 2) {
-    success[i/2] = Insert(keys[i], keys[i + 1]);
+    auto key = keys[i];
+    if (try_compress_) {
+      key.UnCompress();
+    }
+    success[i/2] = Insert(key, keys[i + 1]);
   }
   return success;
 }
@@ -168,7 +188,10 @@ bool SkipList<K, V>::Delete(const K& key) {
 template <typename K, typename V>
 void SkipList<K, V>::Delete(const std::vector<K>& keys) {
   assert(keys.size() != 0);
-  for (const auto& key : keys) {
+  for (auto key : keys) {
+    if (try_compress_) {
+      key.UnCompress();
+    }
     Delete(key);
   }
   return ;

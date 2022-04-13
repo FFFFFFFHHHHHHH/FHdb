@@ -9,6 +9,8 @@
 /root/work/project/FHdb/log/AsyncLogging.cc
 AsyncLogging.h
 /root/work/project/FHdb/log/AsyncLogging.h
+iostream
+-
 
 /root/work/project/FHdb/log/AsyncLogging.h
 LogStream.h

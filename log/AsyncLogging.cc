@@ -1,12 +1,14 @@
 #include "AsyncLogging.h"
 
+#include <iostream>
 
-AsyncLogging::AsyncLogging(const std::string file_name) : 
+AsyncLogging::AsyncLogging(const std::string path) : 
   current_(std::make_shared<Buffer>()), 
-  file_name_(file_name), 
+  path_(path), 
   mutex_(), 
   cv_(),
   running_(false) {
+  printf("new path:%s\n", path.c_str());
   thread_ = std::make_unique<std::thread>(&AsyncLogging::thread_func, this);
   running_.store(true);
 }
@@ -36,7 +38,7 @@ void AsyncLogging::Append(const char* buf, size_t len) {
 }
 
 void AsyncLogging::thread_func() {
-  LogFile logfile(file_name_);
+  LogFile logfile(path_);
   buffers_.clear();
   buffers_to_write_.clear();
   while (running_ == true) {

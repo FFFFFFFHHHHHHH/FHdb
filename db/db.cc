@@ -29,6 +29,7 @@ int DataBase::ParseTheCommand(const std::string& command_line) {
   error_ = 0;
   command_ = "";
   message_ = "";
+  dict_.clear();
   keys_.clear();
   size_t pos = 0;
   std::string temp_str;
@@ -141,8 +142,12 @@ void DataBase::Show() {
 #endif
 
   message_ += "[size: " + std::to_string(nodes.size()) + "]  ";
-  for (const auto& node : nodes) {
-    message_ += "(" + node->key_.ToString() + ',' + node->value_.ToString() + ") ";
+  for (auto node : nodes) {
+    Node<Key, Value> no(node->key_, node->value_, node->level_);
+    if (db_->try_compress()) {
+      no.key_.UnCompress();
+    }
+    message_ += "(" + no.key_.ToString() + ',' + no.value_.ToString() + ") ";
   }
   return ;
 }

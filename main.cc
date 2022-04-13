@@ -7,9 +7,13 @@
 
 int main() {
 
+  AOF << "just test";
+
 #ifdef TEST_ON
   FHdb::TEST();
 #endif
+
+  AOF << "just test";
 
   return 0;
 }
