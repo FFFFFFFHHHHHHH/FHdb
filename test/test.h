@@ -17,6 +17,8 @@ size_t AliveNode() {
 
 #define TEST_ON
 
+#define CHECK_ON
+
 std::string test_skiplist_int();
 
 std::string test_skiplist_slice();

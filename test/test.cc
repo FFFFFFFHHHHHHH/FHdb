@@ -234,10 +234,11 @@ std::string test_db_pre() {
   return res;
 }
 
-void test_db() {
+void run_db() {
   // test command
   bool success = true;
   auto ptr = FHdb::DataBase::single();
+  ptr->close_test();
   // ptr->ParseTheCommand("  set a 1 2 3");
   // if (ptr->CommandToString() != "set a 1 2 3") ERROR
   // ptr->ParseTheCommand(" DeLet  a asdklfj asd i1   1      2 | 3");
@@ -271,7 +272,7 @@ void TEST() {
   }
 
   // test_log();
-  test_db();
+  run_db();
 }
 
 }

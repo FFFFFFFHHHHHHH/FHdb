@@ -8,7 +8,6 @@ AsyncLogging::AsyncLogging(const std::string path) :
   mutex_(), 
   cv_(),
   running_(false) {
-  printf("new path:%s\n", path.c_str());
   thread_ = std::make_unique<std::thread>(&AsyncLogging::thread_func, this);
   running_.store(true);
 }

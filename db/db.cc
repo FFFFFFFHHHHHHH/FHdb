@@ -6,11 +6,19 @@ DataBase::DataBase() :
   db_(std::make_shared<SkipList<Slice, Slice>>()),
   result_(nullptr), 
   error_(0) {
+  testing_ = true;
   command_dict_["set"] = std::bind(&DataBase::Set, this);
   command_dict_["del"] = std::bind(&DataBase::Del, this);
   command_dict_["clear"] = std::bind(&DataBase::Clear, this);
   command_dict_["get"] = std::bind(&DataBase::Get, this);
   command_dict_["show"] = std::bind(&DataBase::Show, this);
+
+  safe_command_["set"] = false;
+  safe_command_["del"] = false;
+  safe_command_["clear"] = false;
+  safe_command_["get"] = true;
+  safe_command_["show"] = true;
+  Persistencing();
 }
 
 void DataBase::GetWord(size_t& pos, const std::string& str, std::string& temp) {
@@ -59,6 +67,14 @@ int DataBase::ParseTheCommand(const std::string& command_line) {
 
   if (command_dict_.count(command_)) {
     command_dict_[command_]();
+    assert(safe_command_.count(command_));
+    if (!testing_ && !persistencing_ && !safe_command_[command_]) {
+      std::string sql = command_;
+      for (const auto& key : keys_) {
+        sql += ' ' + key.ToString();
+      }
+      AOF << sql;
+    }
   } else if (command_ == "q") {
     error_ = 2;
   } else {
@@ -109,7 +125,7 @@ void DataBase::Set() {
   std::vector<bool> success = db_->Insert(keys_);
   assert(success.size() * 2 == keys_.size());
 
-#ifdef TEST_ON
+#ifdef CHECK_ON
   assert(db_->show().size() == ALIVE_NODE);
 #endif
 
@@ -131,7 +147,7 @@ void DataBase::Show() {
   std::vector<std::shared_ptr<Node<Key, Value>>> nodes = db_->show();
 
   // check memory
-#ifdef TEST_ON
+#ifdef CHECK_ON
   assert(db_->show().size() == ALIVE_NODE);
   for (const auto& node : nodes) {
     Slice k(node->key_.ToString());
@@ -167,7 +183,7 @@ void DataBase::Clear() {
     return ;
   }
   db_->Clear();
-#ifdef TEST_ON
+#ifdef CHECK_ON
   assert(db_->show().size() == ALIVE_NODE);
   assert(ALIVE_NODE == 0);
 #endif
@@ -180,7 +196,7 @@ void DataBase::Get() {
     error_ = 4;
     return ;
   }
-#ifdef TEST_ON
+#ifdef CHECK_ON
   assert(db_->show().size() == ALIVE_NODE);
 #endif
   auto nodes = std::move(db_->Find(keys_));
@@ -194,6 +210,20 @@ void DataBase::Get() {
   }
   message_.back() = ')';
   return ;
+}
+
+void DataBase::Persistencing() {
+  persistencing_ = true;
+  std::ifstream fin("aof_log");
+  if (!fin.is_open()) {
+    puts("open aof file fail");
+  } else {
+    std::string sql;
+    while (std::getline(fin, sql)) {
+      ParseTheCommand(sql);
+    }
+  }
+  persistencing_ = false;
 }
 
 }

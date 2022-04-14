@@ -3,6 +3,8 @@
 #include "../log/Logging.h"
 #include "../util/util.h"
 #include <map>
+#include <iostream>
+#include <fstream>
 #include <functional>
 #include <memory>
 
@@ -48,6 +50,11 @@ public:
     return error_;
   }
 
+  void close_test() {
+    testing_ = false;
+    Persistencing();
+  }
+
   std::map<Slice, Slice> dict_; // just test
 
 private:
@@ -55,6 +62,8 @@ private:
   inline void GetWord(size_t& pos, const std::string& str, std::string& temp);
 
   void AddMessagePre();
+
+  void Persistencing();
 
   typedef Slice Key;
   typedef Slice Value;
@@ -74,6 +83,11 @@ private:
   // 4 args error
 
   std::map<std::string, std::function<void(void)>> command_dict_;
+  std::map<std::string, bool> safe_command_;
+
+  bool persistencing_;
+
+  bool testing_;
 
   constexpr static const char* LogPath_ = "db_log";
   constexpr static const char* AofPath_ = "aof_log";

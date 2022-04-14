@@ -1,3 +1,16 @@
  echo 
 just test
+set 1 2 3 4
+just test
+just test
+just test
+just test
+just test
+just test
+clear
+set a b c d
+just test
+just test
+del a
+just test
 just test

@@ -39,6 +39,10 @@ db.h
 /root/work/project/FHdb/util/util.h
 map
 -
+iostream
+-
+fstream
+-
 functional
 -
 memory
