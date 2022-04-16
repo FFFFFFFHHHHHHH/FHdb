@@ -18,7 +18,6 @@ DataBase::DataBase() :
   safe_command_["clear"] = false;
   safe_command_["get"] = true;
   safe_command_["show"] = true;
-  Persistencing();
 }
 
 void DataBase::GetWord(size_t& pos, const std::string& str, std::string& temp) {
@@ -223,6 +222,7 @@ void DataBase::Persistencing() {
       ParseTheCommand(sql);
     }
   }
+  fin.close();
   persistencing_ = false;
 }
 
