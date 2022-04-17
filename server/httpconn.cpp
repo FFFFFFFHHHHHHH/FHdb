@@ -24,17 +24,14 @@ void HttpConn::init(int fd, const sockaddr_in& addr) {
     readBuff_.RetrieveAll();
     isClose_ = false;
     LOG << "Clien[" << fd_ << "](" << GetIP()  << ":" << GetPort() << ") in, userCount:" << userCount;
-    // LOG_INFO("Client[%d](%s:%d) in, userCount:%d", fd_, GetIP(), GetPort(), (int)userCount);
 }
 
 void HttpConn::Close() {
-    // response_.UnmapFile();
     if(isClose_ == false){
         isClose_ = true; 
         userCount--;
         close(fd_);
         LOG << "Clien[" << fd_ << "](" << GetIP()  << ":" << GetPort() << ") quit, userCount:" << userCount;
-        // LOG_INFO("Client[%d](%s:%d) quit, UserCount:%d", fd_, GetIP(), GetPort(), (int)userCount);
     }
 }
 
@@ -92,37 +89,22 @@ ssize_t HttpConn::write(int* saveErrno) {
 }
 
 bool HttpConn::process() {
-    // request_.Init();
     if(readBuff_.ReadableBytes() <= 0) {
         return false;
     }
-    // else if(request_.parse(readBuff_)) {
-    //     LOG_DEBUG("%s", request_.path().c_str());
-    //     response_.Init(srcDir, request_.path(), request_.IsKeepAlive(), 200);
-    // } else {
-    //     response_.Init(srcDir, request_.path(), false, 400);
-    // }
-
-    // response_.MakeResponse(writeBuff_);
-    /* 响应头 */
 
     // ===      fill write  ===
-    auto str = readBuff_.RetrieveAllToStr();
-    std::cout << "read:" << str << std::endl;
+    auto read_str = readBuff_.RetrieveAllToStr();
+    LOG << "TCP connect :" << read_str;
+    // std::cout << "read:" << read_str << std::endl;
     readBuff_.RetrieveAll();
     writeBuff_.RetrieveAll();
-    writeBuff_.Append(str);
-    writeBuff_.Append("end!");
+    auto ptr = FHdb::DataBase::single();
+    ptr->ParseTheCommand(read_str);
+    writeBuff_.Append(ptr->message() + '\0');
     iov_[0].iov_base = const_cast<char*>(writeBuff_.Peek());
     iov_[0].iov_len = writeBuff_.ReadableBytes();
     iovCnt_ = 1;
 
-    /* 文件 */
-    // if(response_.FileLen() > 0  && response_.File()) {
-    //     iov_[1].iov_base = response_.File();
-    //     iov_[1].iov_len = response_.FileLen();
-    //     iovCnt_ = 2;
-    // }
-    // LOG_DEBUG("filesize:%d, %d  to %d", response_.FileLen() , iovCnt_, ToWriteBytes());
     return true;
 }

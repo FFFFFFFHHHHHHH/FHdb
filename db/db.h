@@ -51,6 +51,7 @@ public:
   }
 
   void close_test() {
+    Clear();
     testing_ = false;
     Persistencing();
   }

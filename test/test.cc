@@ -171,10 +171,11 @@ std::string test_slice_compress() {
 }
 
 std::string test_log() {
-  for (int i = 1; i <= 10000; i++) {
-    LOG << i;
+  for (int i = 1; i <= 100; i++) {
+    // LOG << i;
   }
-  return "";
+  std::string res = "TRUE test_log";
+  return res;
 }
 
 std::string test_db_pre() {
@@ -234,17 +235,17 @@ std::string test_db_pre() {
   return res;
 }
 
-void run_db() {
+std::string run_db() {
   // test command
   bool success = true;
   auto ptr = FHdb::DataBase::single();
-  ptr->close_test();
+  // ptr->close_test();
   // ptr->ParseTheCommand("  set a 1 2 3");
   // if (ptr->CommandToString() != "set a 1 2 3") ERROR
   // ptr->ParseTheCommand(" DeLet  a asdklfj asd i1   1      2 | 3");
   // if (ptr->CommandToString() != "delet a asdklfj asd i1 1 2 | 3") ERROR
 
-  while (true) {
+  while (0) {
     printf("> ");
     std::string cmd;
     std::getline(std::cin, cmd);
@@ -256,8 +257,9 @@ void run_db() {
     }
   }
 
-
-  LOG << (success ? "TRUE" : "FALSE") << " test_db";
+  std::string res = (success ? "TRUE" : "FALSE") + static_cast<std::string>(" test_db");
+  LOG << res;
+  return res;
 }
 
 void TEST() {
@@ -266,13 +268,14 @@ void TEST() {
   test_result.push_back(test_skiplist_int());
   test_result.push_back(test_skiplist_slice());
   test_result.push_back(test_db_pre());
+  test_result.push_back(run_db());
+  test_result.push_back(test_log());
 
   for (const auto& result : test_result) {
     std::cout << result << std::endl;
+    LOG << result;
   }
-
-  // test_log();
-  run_db();
+  return ;
 }
 
 }

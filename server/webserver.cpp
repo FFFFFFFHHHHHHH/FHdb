@@ -10,19 +10,12 @@ WebServer::WebServer(
             port_(port), openLinger_(OptLinger), timeoutMS_(timeoutMS), isClose_(false),
             timer_(new HeapTimer()), threadpool_(new ThreadPool(threadNum)), epoller_(new Epoller())
 {
-    // srcDir_ = getcwd(nullptr, 256);
-    // assert(srcDir_);
-    // strncat(srcDir_, "/resources/", 16);
     HttpConn::userCount = 0;
-    // HttpConn::srcDir = srcDir_;
-
     InitEventMode_(trigMode);
     if(!InitSocket_()) { isClose_ = true;}
-
     if(openLog) {
-      LOG << "========== Server init ==========";
+      LOG << "========== Server init success ==========";
       LOG << "Port:" << port_ << ", OpenLinger: " << (OptLinger ? "true" : "false");
-      LOG << "";
     }
 }
 
@@ -58,14 +51,16 @@ void WebServer::InitEventMode_(int trigMode) {
 
 void WebServer::Start() {
     int timeMS = -1;  /* epoll wait timeout == -1 无事件将阻塞 */
-    if(!isClose_) { LOG << "========== Server start =========="; }
+    if(!isClose_) { LOG << "========== Server start ==========\n"; }
+    auto ptr = FHdb::DataBase::single();
+    ptr->close_test();
+
     while(!isClose_) {
         if(timeoutMS_ > 0) {
             timeMS = timer_->GetNextTick();
         }
         int eventCnt = epoller_->Wait(timeMS);
         for(int i = 0; i < eventCnt; i++) {
-            /* 处理事件 */
             int fd = epoller_->GetEventFd(i);
             uint32_t events = epoller_->GetEvents(i);
             if(fd == listenFd_) {
@@ -77,7 +72,6 @@ void WebServer::Start() {
             }
             else if(events & EPOLLIN) {
                 assert(users_.count(fd) > 0);
-                LOG << "read!";
                 DealRead_(&users_[fd]);
             }
             else if(events & EPOLLOUT) {
@@ -101,7 +95,7 @@ void WebServer::SendError_(int fd, const char*info) {
 
 void WebServer::CloseConn_(HttpConn* client) {
     assert(client);
-    LOG << "Client[" << client->GetFd() << "] quit!";
+    LOG << "Client[" << client->GetFd() << "] exit!";
     epoller_->DelFd(client->GetFd());
     client->Close();
 }
@@ -175,7 +169,6 @@ void WebServer::OnWrite_(HttpConn* client) {
     int writeErrno = 0;
     ret = client->write(&writeErrno);
     if(client->ToWriteBytes() == 0) {
-        /* 传输完成 */
         if(client->IsKeepAlive()) {
             OnProcess(client);
             return;
@@ -183,7 +176,6 @@ void WebServer::OnWrite_(HttpConn* client) {
     }
     else if(ret < 0) {
         if(writeErrno == EAGAIN) {
-            /* 继续传输 */
             epoller_->ModFd(client->GetFd(), connEvent_ | EPOLLOUT);
             return;
         }
@@ -191,7 +183,6 @@ void WebServer::OnWrite_(HttpConn* client) {
     CloseConn_(client);
 }
 
-/* Create listenFd */
 bool WebServer::InitSocket_() {
     int ret;
     struct sockaddr_in addr;
@@ -252,7 +243,6 @@ bool WebServer::InitSocket_() {
       return false;
     }
     SetFdNonblock(listenFd_);
-    LOG << "Server init success" << port_;
     return true;
 }
 

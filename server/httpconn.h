@@ -2,17 +2,14 @@
 #define HTTP_CONN_H
 
 #include <sys/types.h>
-#include <sys/uio.h>     // readv/writev
-#include <arpa/inet.h>   // sockaddr_in
-#include <stdlib.h>      // atoi()
+#include <sys/uio.h>     
+#include <arpa/inet.h>  
+#include <stdlib.h>    
 #include <errno.h>      
 
-// #include "../log/log.h"
 #include "../log/Logging.h"
-// #include "../pool/sqlconnRAII.h"
 #include "../basic/buffer.h"
-// #include "httprequest.h"
-// #include "httpresponse.h"
+#include "../db/db.h"
 
 class HttpConn {
 public:
@@ -60,11 +57,9 @@ private:
     int iovCnt_;
     struct iovec iov_[2];
     
-    Buffer readBuff_; // 读缓冲区
-    Buffer writeBuff_; // 写缓冲区
+    Buffer readBuff_;
+    Buffer writeBuff_;
 
-    // HttpRequest request_;
-    // HttpResponse response_;
 };
 
 

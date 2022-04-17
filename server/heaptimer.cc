@@ -12,8 +12,10 @@ void HeapTimer::siftup_(size_t i) {
 }
 
 void HeapTimer::SwapNode_(size_t i, size_t j) {
-    assert(i >= 0 && i < heap_.size());
-    assert(j >= 0 && j < heap_.size());
+  if (i < 0 || i >= heap_.size()) return ;
+  if (j < 0 || j >= heap_.size()) return ;
+    // assert(i >= 0 && i < heap_.size());
+    // assert(j >= 0 && j < heap_.size());
     std::swap(heap_[i], heap_[j]);
     ref_[heap_[i].id] = i;
     ref_[heap_[j].id] = j;

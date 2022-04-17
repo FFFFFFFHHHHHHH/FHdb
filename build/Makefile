@@ -136,6 +136,33 @@ LOG/fast:
 	$(MAKE) -f log/CMakeFiles/LOG.dir/build.make log/CMakeFiles/LOG.dir/build
 .PHONY : LOG/fast
 
+basic/buffer.o: basic/buffer.cpp.o
+
+.PHONY : basic/buffer.o
+
+# target to build an object file
+basic/buffer.cpp.o:
+	$(MAKE) -f CMakeFiles/FHdb.dir/build.make CMakeFiles/FHdb.dir/basic/buffer.cpp.o
+.PHONY : basic/buffer.cpp.o
+
+basic/buffer.i: basic/buffer.cpp.i
+
+.PHONY : basic/buffer.i
+
+# target to preprocess a source file
+basic/buffer.cpp.i:
+	$(MAKE) -f CMakeFiles/FHdb.dir/build.make CMakeFiles/FHdb.dir/basic/buffer.cpp.i
+.PHONY : basic/buffer.cpp.i
+
+basic/buffer.s: basic/buffer.cpp.s
+
+.PHONY : basic/buffer.s
+
+# target to generate assembly for a file
+basic/buffer.cpp.s:
+	$(MAKE) -f CMakeFiles/FHdb.dir/build.make CMakeFiles/FHdb.dir/basic/buffer.cpp.s
+.PHONY : basic/buffer.cpp.s
+
 basic/slice.o: basic/slice.cc.o
 
 .PHONY : basic/slice.o
@@ -217,6 +244,114 @@ main.cc.s:
 	$(MAKE) -f CMakeFiles/FHdb.dir/build.make CMakeFiles/FHdb.dir/main.cc.s
 .PHONY : main.cc.s
 
+server/epoller.o: server/epoller.cc.o
+
+.PHONY : server/epoller.o
+
+# target to build an object file
+server/epoller.cc.o:
+	$(MAKE) -f CMakeFiles/FHdb.dir/build.make CMakeFiles/FHdb.dir/server/epoller.cc.o
+.PHONY : server/epoller.cc.o
+
+server/epoller.i: server/epoller.cc.i
+
+.PHONY : server/epoller.i
+
+# target to preprocess a source file
+server/epoller.cc.i:
+	$(MAKE) -f CMakeFiles/FHdb.dir/build.make CMakeFiles/FHdb.dir/server/epoller.cc.i
+.PHONY : server/epoller.cc.i
+
+server/epoller.s: server/epoller.cc.s
+
+.PHONY : server/epoller.s
+
+# target to generate assembly for a file
+server/epoller.cc.s:
+	$(MAKE) -f CMakeFiles/FHdb.dir/build.make CMakeFiles/FHdb.dir/server/epoller.cc.s
+.PHONY : server/epoller.cc.s
+
+server/heaptimer.o: server/heaptimer.cc.o
+
+.PHONY : server/heaptimer.o
+
+# target to build an object file
+server/heaptimer.cc.o:
+	$(MAKE) -f CMakeFiles/FHdb.dir/build.make CMakeFiles/FHdb.dir/server/heaptimer.cc.o
+.PHONY : server/heaptimer.cc.o
+
+server/heaptimer.i: server/heaptimer.cc.i
+
+.PHONY : server/heaptimer.i
+
+# target to preprocess a source file
+server/heaptimer.cc.i:
+	$(MAKE) -f CMakeFiles/FHdb.dir/build.make CMakeFiles/FHdb.dir/server/heaptimer.cc.i
+.PHONY : server/heaptimer.cc.i
+
+server/heaptimer.s: server/heaptimer.cc.s
+
+.PHONY : server/heaptimer.s
+
+# target to generate assembly for a file
+server/heaptimer.cc.s:
+	$(MAKE) -f CMakeFiles/FHdb.dir/build.make CMakeFiles/FHdb.dir/server/heaptimer.cc.s
+.PHONY : server/heaptimer.cc.s
+
+server/httpconn.o: server/httpconn.cpp.o
+
+.PHONY : server/httpconn.o
+
+# target to build an object file
+server/httpconn.cpp.o:
+	$(MAKE) -f CMakeFiles/FHdb.dir/build.make CMakeFiles/FHdb.dir/server/httpconn.cpp.o
+.PHONY : server/httpconn.cpp.o
+
+server/httpconn.i: server/httpconn.cpp.i
+
+.PHONY : server/httpconn.i
+
+# target to preprocess a source file
+server/httpconn.cpp.i:
+	$(MAKE) -f CMakeFiles/FHdb.dir/build.make CMakeFiles/FHdb.dir/server/httpconn.cpp.i
+.PHONY : server/httpconn.cpp.i
+
+server/httpconn.s: server/httpconn.cpp.s
+
+.PHONY : server/httpconn.s
+
+# target to generate assembly for a file
+server/httpconn.cpp.s:
+	$(MAKE) -f CMakeFiles/FHdb.dir/build.make CMakeFiles/FHdb.dir/server/httpconn.cpp.s
+.PHONY : server/httpconn.cpp.s
+
+server/webserver.o: server/webserver.cpp.o
+
+.PHONY : server/webserver.o
+
+# target to build an object file
+server/webserver.cpp.o:
+	$(MAKE) -f CMakeFiles/FHdb.dir/build.make CMakeFiles/FHdb.dir/server/webserver.cpp.o
+.PHONY : server/webserver.cpp.o
+
+server/webserver.i: server/webserver.cpp.i
+
+.PHONY : server/webserver.i
+
+# target to preprocess a source file
+server/webserver.cpp.i:
+	$(MAKE) -f CMakeFiles/FHdb.dir/build.make CMakeFiles/FHdb.dir/server/webserver.cpp.i
+.PHONY : server/webserver.cpp.i
+
+server/webserver.s: server/webserver.cpp.s
+
+.PHONY : server/webserver.s
+
+# target to generate assembly for a file
+server/webserver.cpp.s:
+	$(MAKE) -f CMakeFiles/FHdb.dir/build.make CMakeFiles/FHdb.dir/server/webserver.cpp.s
+.PHONY : server/webserver.cpp.s
+
 test/test.o: test/test.cc.o
 
 .PHONY : test/test.o
@@ -254,6 +389,9 @@ help:
 	@echo "... FHdb"
 	@echo "... edit_cache"
 	@echo "... LOG"
+	@echo "... basic/buffer.o"
+	@echo "... basic/buffer.i"
+	@echo "... basic/buffer.s"
 	@echo "... basic/slice.o"
 	@echo "... basic/slice.i"
 	@echo "... basic/slice.s"
@@ -263,6 +401,18 @@ help:
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... server/epoller.o"
+	@echo "... server/epoller.i"
+	@echo "... server/epoller.s"
+	@echo "... server/heaptimer.o"
+	@echo "... server/heaptimer.i"
+	@echo "... server/heaptimer.s"
+	@echo "... server/httpconn.o"
+	@echo "... server/httpconn.i"
+	@echo "... server/httpconn.s"
+	@echo "... server/webserver.o"
+	@echo "... server/webserver.i"
+	@echo "... server/webserver.s"
 	@echo "... test/test.o"
 	@echo "... test/test.i"
 	@echo "... test/test.s"

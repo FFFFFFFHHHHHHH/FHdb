@@ -1,2 +1,0 @@
-/usr/bin/ar qc libLOG.a  CMakeFiles/LOG.dir/AsyncLogging.cc.o CMakeFiles/LOG.dir/FileUtil.cc.o CMakeFiles/LOG.dir/LogFile.cc.o CMakeFiles/LOG.dir/LogStream.cc.o CMakeFiles/LOG.dir/Logging.cc.o
-/usr/bin/ranlib libLOG.a

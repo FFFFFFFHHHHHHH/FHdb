@@ -26,6 +26,7 @@ aux_source_directory(test/. DIR_TEST)
 aux_source_directory(basic/. DIR_BASIC)
 aux_source_directory(skiplist/. DIR_SKIPLIST)
 aux_source_directory(db/. DIR_DB)
+aux_source_directory(server/. DIR_SERVER)
 
 # 添加 math 子目录
 # add_subdirectory(basic)
@@ -34,7 +35,7 @@ aux_source_directory(db/. DIR_DB)
 add_subdirectory(log)
 
 # 指定生成目标 
-add_executable(FHdb ${DIR_SRCS} ${DIR_TEST} ${DIR_SKIPLIST} ${DIR_BASIC} ${DIR_DB})
+add_executable(FHdb ${DIR_SRCS} ${DIR_TEST} ${DIR_SKIPLIST} ${DIR_BASIC} ${DIR_DB} ${DIR_SERVER})
 
 target_link_libraries(FHdb LOG)
 

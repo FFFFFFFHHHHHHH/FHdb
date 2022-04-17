@@ -32,7 +32,6 @@ void DataBase::GetWord(size_t& pos, const std::string& str, std::string& temp) {
 }
 
 int DataBase::ParseTheCommand(const std::string& command_line) {
-  LOG << "command_line: " << command_line;
   error_ = 0;
   command_ = "";
   message_ = "";
@@ -57,12 +56,15 @@ int DataBase::ParseTheCommand(const std::string& command_line) {
     }
   }
   
-  LOG << "command: " << command_;
-  std::string key_str;
-  for (auto && key : keys_) {
-    key_str += key.ToString() + " ";
+  if (!persistencing_) {
+    // LOG << "command_line: " << command_line;
+    LOG << "command: " << command_;
+    std::string key_str;
+    for (auto && key : keys_) {
+      key_str += key.ToString() + " ";
+    }
+    LOG << "key: " + key_str;
   }
-  LOG << "key: " + key_str;
 
   if (command_dict_.count(command_)) {
     command_dict_[command_]();
@@ -104,12 +106,14 @@ void DataBase::AddMessagePre() {
     default:
       prefix = "wrong error!!!";
   }
-
-  LOG << "error: " << error_;
-  LOG << prefix;
-  if (message_.length()) {
-    LOG << message_;
+  if (!persistencing_) {
+    LOG << "error: " << error_;
+    LOG << prefix;
+    if (message_.length()) {
+      LOG << message_;
+    }
   }
+
   if (message_.size()) {
     message_ = '\n' + message_;
   }
@@ -212,6 +216,7 @@ void DataBase::Get() {
 }
 
 void DataBase::Persistencing() {
+  LOG << "==========start persistencing==========";
   persistencing_ = true;
   std::ifstream fin("aof_log");
   if (!fin.is_open()) {
@@ -223,6 +228,9 @@ void DataBase::Persistencing() {
     }
   }
   fin.close();
+  ParseTheCommand("show");
+  LOG << message_;
+  LOG << "==========end persistencing==========";
   persistencing_ = false;
 }
 

@@ -2,18 +2,24 @@
 #include "test/test.h"
 #include "log/Logging.h"
 #include  "db/db.h"
+#include "server/webserver.h"
 
 #include <iostream>
 
 int main() {
 
-  AOF << "just test";
-
 #ifdef TEST_ON
   FHdb::TEST();
 #endif
 
-  AOF << "just test";
+  FHdb::DataBase::single()->close_test();
+  WebServer server(
+      1234, 3, 60000, false,
+      3306, "root", "root","webserver", 
+      12, 1, true, 1, 1024
+      );
+
+  server.Start();
 
   return 0;
 }
