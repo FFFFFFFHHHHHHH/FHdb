@@ -57,6 +57,8 @@ public:
 
   std::map<Slice, Slice> dict_; // just test
 
+  static int userCount;
+
 private:
 
   inline void GetWord(size_t& pos, const std::string& str, std::string& temp);
@@ -91,6 +93,7 @@ private:
 
   constexpr static const char* LogPath_ = "db_log";
   constexpr static const char* AofPath_ = "aof_log";
+
 
 };
 
