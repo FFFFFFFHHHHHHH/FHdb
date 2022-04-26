@@ -14,9 +14,9 @@
        return -1;
    }
     struct sockaddr_in seraddr;
-   inet_pton(AF_INET, "172.31.135.91", &seraddr.sin_addr.s_addr);
+   inet_pton(AF_INET, "118.31.10.109", &seraddr.sin_addr.s_addr);
    seraddr.sin_family = AF_INET;
-   seraddr.sin_port = htons(1234);
+   seraddr.sin_port = htons(3389);
     // 连接服务器
    int ret = connect(fd, (struct sockaddr *)&seraddr, sizeof(seraddr));
     if(ret == -1){
