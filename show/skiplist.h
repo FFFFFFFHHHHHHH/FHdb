@@ -36,6 +36,18 @@ private:
 };
 
 template <typename K, typename V>
+class SkipList {
+private:
+  std::shared_ptr<Node<K, V>> head_;
+  size_t level_;
+  size_t node_cnt_;
+  constexpr static size_t MAX_LEVEL = 20;
+  Random rnd_;
+  Comparator<K> cmp_;
+  bool try_compress_= true;
+};
+
+template <typename K, typename V>
 std::shared_ptr<Node<K, V>> SkipList<K, V>::CreateNode(
                             const K& key, const V& value, const size_t& level) {
   std::shared_ptr<Node<K, V>> ptr = std::make_shared<Node<K, V>>(key, value, level);
