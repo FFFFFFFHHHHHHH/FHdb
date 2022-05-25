@@ -1,1 +1,5 @@
-set 1 2 3 4 a b  c d
+set 1 2 3 4 a b
+set jj kk
+del 1 a
+
+set 1 a b c

@@ -49,13 +49,14 @@ private:
 
   size_t node_cnt_;
 
-  constexpr static size_t MAX_LEVEL = 20;
+  //constexpr static size_t MAX_LEVEL = 20;
+  size_t MAX_LEVEL = 20;
 
   Random rnd_;
 
   Comparator<K> cmp_;
 
-  bool try_compress_= true;
+  bool try_compress_= false;
 
 };
 
@@ -68,9 +69,10 @@ std::shared_ptr<Node<K, V>> SkipList<K, V>::CreateNode(
 
 template <typename K, typename V>
 SkipList<K, V>::SkipList() : rnd_(123456789) {
-  head_ = CreateNode(K(), V(), MAX_LEVEL); // ???
+  head_ = CreateNode(K(), V(), MAX_LEVEL); 
   level_ = 0;
-  try_compress_ = true;
+  try_compress_ = false;
+  MAX_LEVEL = 21;
 }
 
 template <typename K, typename V>
@@ -108,21 +110,25 @@ std::vector<std::shared_ptr<Node<K, V>>> SkipList<K, V>::Find(const std::vector<
 template <typename K, typename V>
 bool SkipList<K, V>::Insert(const K& key, const V& value) {
   // std::cerr << "start find" << std::endl;
-  if (Find(key)) {
-    return false; // have is key
-  }
+  // if (Find(key)) {
+  //   return false; // have is key
+  // }
   // std::cerr << "find over \n";
   std::shared_ptr<Node<K, V>> node = head_;
-  assert(node != nullptr);
-  assert(level_ >= 0 && level_ <= MAX_LEVEL);
+  // assert(node != nullptr);
+  // assert(level_ >= 0 && level_ <= MAX_LEVEL);
   std::vector<std::shared_ptr<Node<K, V>>> update(MAX_LEVEL, head_);
 
   for (int i = static_cast<int>(level_ - 1); i >= 0; --i) {
-    while (node->forward_[i] && cmp_.Less(node->forward_[i]->key_, key)) {
+    while (node->forward_[i] && node->forward_[i]->key_ < key/*cmp_.Less(node->forward_[i]->key_, key)*/) {
       node = node->forward_[i];
     }
-    assert(i < static_cast<int>(update.size()));
+    // assert(i < static_cast<int>(update.size()));
     update[i] = node;
+  }
+  node = node->forward_[0];
+  if (node && key == node->key_) {
+    return 0;
   }
 
   size_t new_level = GetRandomLevel();
@@ -200,8 +206,13 @@ void SkipList<K, V>::Delete(const std::vector<K>& keys) {
 
 template <typename K, typename V>
 size_t SkipList<K, V>::GetRandomLevel() {
-  size_t level = static_cast<size_t>(rnd_.Uniform(MAX_LEVEL));
-  return level + 1;
+  // size_t level = static_cast<size_t>(rnd_.Uniform(MAX_LEVEL));
+  size_t level = 1;
+  while (rand() % 2) {
+    level++;
+  }
+  level = std::min(level, MAX_LEVEL);
+  return level;
 }
 
 template <typename K, typename V>

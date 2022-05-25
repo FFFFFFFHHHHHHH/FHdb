@@ -10,7 +10,7 @@ namespace FHdb {
 // int cnt_new;
 
 #define ERROR do{                   \
-  LOG << "error!  " << __LINE__;    \
+  std::cout << "error!  " << __LINE__;    \
   success = 0;                      \
 } while(0);                         \
 
@@ -264,11 +264,11 @@ std::string run_db() {
 
 void TEST() {
   std::vector<std::string> test_result;
-  test_result.push_back(test_slice_compress());
+  // test_result.push_back(test_slice_compress());
   test_result.push_back(test_skiplist_int());
-  test_result.push_back(test_skiplist_slice());
-  test_result.push_back(test_db_pre());
-  test_result.push_back(run_db());
+  // test_result.push_back(test_skiplist_slice());
+  // test_result.push_back(test_db_pre());
+  // test_result.push_back(run_db());
   test_result.push_back(test_log());
 
   for (const auto& result : test_result) {

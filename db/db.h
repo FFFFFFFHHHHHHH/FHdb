@@ -95,7 +95,6 @@ private:
   constexpr static const char* LogPath_ = "db_log";
   constexpr static const char* AofPath_ = "aof_log";
 
-
 };
 
 }

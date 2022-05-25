@@ -152,13 +152,13 @@ void DataBase::Show() {
   // check memory
 #ifdef CHECK_ON
   assert(db_->show().size() == ALIVE_NODE);
+#endif
   for (const auto& node : nodes) {
     Slice k(node->key_.ToString());
     Slice v(node->value_.ToString());
     assert(dict_.count(k) == 0);
     dict_[k] = v;
   }
-#endif
 
   message_ += "[size: " + std::to_string(nodes.size()) + "]  ";
   for (auto node : nodes) {

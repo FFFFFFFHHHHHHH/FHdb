@@ -9,12 +9,11 @@
 int main() {
 
 #ifdef TEST_ON
-  FHdb::TEST();
+   //FHdb::TEST();
 #endif
-
   FHdb::DataBase::single()->close_test();
   WebServer server(
-      3389, 3, 60000, false,
+      3389, 3, 600000, false,
       3306, "root", "root","webserver", 
       12, 1, true, 1, 1024
       );
