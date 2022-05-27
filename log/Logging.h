@@ -5,7 +5,6 @@
 #include <sys/time.h>
 
 #define LOG Logging(__FILE__, __LINE__).Stream()
-
 #define AOF Logging("aof_log").Stream()
 
 class Logging {

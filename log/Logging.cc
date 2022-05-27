@@ -1,5 +1,7 @@
 #include "Logging.h"
 
+int use_log = 1;
+
 Logging::Logging(const char* file_name, int line, const char* path) : 
   file_name_(file_name),
   line_(line) {
@@ -24,5 +26,6 @@ void Logging::AddTime() {
 
 Logging::~Logging() {
   stream_ << "\n";
-  async_log_ptr->Append(stream_.buffer().data(), stream_.buffer().length());
+  if (use_log)
+    async_log_ptr->Append(stream_.buffer().data(), stream_.buffer().length());
 }

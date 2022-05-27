@@ -33,4 +33,6 @@ void test_db();
 
 void TEST();
 
+void DB_TEST();
+
 }

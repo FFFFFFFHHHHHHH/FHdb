@@ -3,6 +3,7 @@
 #include "../db/db.h"
 #include <iostream>
 
+extern int use_log;
 namespace FHdb {
 
 // test memory
@@ -264,11 +265,11 @@ std::string run_db() {
 
 void TEST() {
   std::vector<std::string> test_result;
-  // test_result.push_back(test_slice_compress());
+  test_result.push_back(test_slice_compress());
   test_result.push_back(test_skiplist_int());
-  // test_result.push_back(test_skiplist_slice());
-  // test_result.push_back(test_db_pre());
-  // test_result.push_back(run_db());
+  test_result.push_back(test_skiplist_slice());
+  test_result.push_back(test_db_pre());
+  test_result.push_back(run_db());
   test_result.push_back(test_log());
 
   for (const auto& result : test_result) {
@@ -276,6 +277,26 @@ void TEST() {
     LOG << result;
   }
   return ;
+}
+
+
+void DB_TEST() {
+  ::use_log = 0;
+
+  srand(time(0));
+  int up = 10000;
+  scanf("%d", &up);
+  auto ptr = FHdb::DataBase::single();
+  auto start = std::chrono::high_resolution_clock::now();
+  for (int i = 1; i <= up; i++) {
+    ptr->ParseTheCommand("set a a");
+  }
+  auto end = std::chrono::high_resolution_clock::now();
+  std::cout << "skiplist_database_test_" << up << "_time_cost: ";
+  printf("%d.%2ds\n",static_cast<int>(std::chrono::duration_cast<std::chrono::seconds>(end - start).count()), 
+                     static_cast<int>(std::chrono::duration_cast<std::chrono::microseconds>(end - start).count()%1000));
+
+  ::use_log = 1;
 }
 
 }
