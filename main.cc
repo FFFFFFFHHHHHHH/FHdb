@@ -9,8 +9,8 @@
 int main() {
 
 #ifdef TEST_ON
-   //FHdb::TEST();
-  // FHdb::DB_TEST();
+  //FHdb::TEST();
+  FHdb::DB_TEST();
 #endif
   
   FHdb::DataBase::single()->close_test();

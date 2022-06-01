@@ -136,32 +136,32 @@ LOG/fast:
 	$(MAKE) -f log/CMakeFiles/LOG.dir/build.make log/CMakeFiles/LOG.dir/build
 .PHONY : LOG/fast
 
-basic/buffer.o: basic/buffer.cpp.o
+basic/buffer.o: basic/buffer.cc.o
 
 .PHONY : basic/buffer.o
 
 # target to build an object file
-basic/buffer.cpp.o:
-	$(MAKE) -f CMakeFiles/FHdb.dir/build.make CMakeFiles/FHdb.dir/basic/buffer.cpp.o
-.PHONY : basic/buffer.cpp.o
+basic/buffer.cc.o:
+	$(MAKE) -f CMakeFiles/FHdb.dir/build.make CMakeFiles/FHdb.dir/basic/buffer.cc.o
+.PHONY : basic/buffer.cc.o
 
-basic/buffer.i: basic/buffer.cpp.i
+basic/buffer.i: basic/buffer.cc.i
 
 .PHONY : basic/buffer.i
 
 # target to preprocess a source file
-basic/buffer.cpp.i:
-	$(MAKE) -f CMakeFiles/FHdb.dir/build.make CMakeFiles/FHdb.dir/basic/buffer.cpp.i
-.PHONY : basic/buffer.cpp.i
+basic/buffer.cc.i:
+	$(MAKE) -f CMakeFiles/FHdb.dir/build.make CMakeFiles/FHdb.dir/basic/buffer.cc.i
+.PHONY : basic/buffer.cc.i
 
-basic/buffer.s: basic/buffer.cpp.s
+basic/buffer.s: basic/buffer.cc.s
 
 .PHONY : basic/buffer.s
 
 # target to generate assembly for a file
-basic/buffer.cpp.s:
-	$(MAKE) -f CMakeFiles/FHdb.dir/build.make CMakeFiles/FHdb.dir/basic/buffer.cpp.s
-.PHONY : basic/buffer.cpp.s
+basic/buffer.cc.s:
+	$(MAKE) -f CMakeFiles/FHdb.dir/build.make CMakeFiles/FHdb.dir/basic/buffer.cc.s
+.PHONY : basic/buffer.cc.s
 
 basic/slice.o: basic/slice.cc.o
 
@@ -298,59 +298,86 @@ server/heaptimer.cc.s:
 	$(MAKE) -f CMakeFiles/FHdb.dir/build.make CMakeFiles/FHdb.dir/server/heaptimer.cc.s
 .PHONY : server/heaptimer.cc.s
 
-server/httpconn.o: server/httpconn.cpp.o
+server/httpconn.o: server/httpconn.cc.o
 
 .PHONY : server/httpconn.o
 
 # target to build an object file
-server/httpconn.cpp.o:
-	$(MAKE) -f CMakeFiles/FHdb.dir/build.make CMakeFiles/FHdb.dir/server/httpconn.cpp.o
-.PHONY : server/httpconn.cpp.o
+server/httpconn.cc.o:
+	$(MAKE) -f CMakeFiles/FHdb.dir/build.make CMakeFiles/FHdb.dir/server/httpconn.cc.o
+.PHONY : server/httpconn.cc.o
 
-server/httpconn.i: server/httpconn.cpp.i
+server/httpconn.i: server/httpconn.cc.i
 
 .PHONY : server/httpconn.i
 
 # target to preprocess a source file
-server/httpconn.cpp.i:
-	$(MAKE) -f CMakeFiles/FHdb.dir/build.make CMakeFiles/FHdb.dir/server/httpconn.cpp.i
-.PHONY : server/httpconn.cpp.i
+server/httpconn.cc.i:
+	$(MAKE) -f CMakeFiles/FHdb.dir/build.make CMakeFiles/FHdb.dir/server/httpconn.cc.i
+.PHONY : server/httpconn.cc.i
 
-server/httpconn.s: server/httpconn.cpp.s
+server/httpconn.s: server/httpconn.cc.s
 
 .PHONY : server/httpconn.s
 
 # target to generate assembly for a file
-server/httpconn.cpp.s:
-	$(MAKE) -f CMakeFiles/FHdb.dir/build.make CMakeFiles/FHdb.dir/server/httpconn.cpp.s
-.PHONY : server/httpconn.cpp.s
+server/httpconn.cc.s:
+	$(MAKE) -f CMakeFiles/FHdb.dir/build.make CMakeFiles/FHdb.dir/server/httpconn.cc.s
+.PHONY : server/httpconn.cc.s
 
-server/webserver.o: server/webserver.cpp.o
+server/webserver.o: server/webserver.cc.o
 
 .PHONY : server/webserver.o
 
 # target to build an object file
-server/webserver.cpp.o:
-	$(MAKE) -f CMakeFiles/FHdb.dir/build.make CMakeFiles/FHdb.dir/server/webserver.cpp.o
-.PHONY : server/webserver.cpp.o
+server/webserver.cc.o:
+	$(MAKE) -f CMakeFiles/FHdb.dir/build.make CMakeFiles/FHdb.dir/server/webserver.cc.o
+.PHONY : server/webserver.cc.o
 
-server/webserver.i: server/webserver.cpp.i
+server/webserver.i: server/webserver.cc.i
 
 .PHONY : server/webserver.i
 
 # target to preprocess a source file
-server/webserver.cpp.i:
-	$(MAKE) -f CMakeFiles/FHdb.dir/build.make CMakeFiles/FHdb.dir/server/webserver.cpp.i
-.PHONY : server/webserver.cpp.i
+server/webserver.cc.i:
+	$(MAKE) -f CMakeFiles/FHdb.dir/build.make CMakeFiles/FHdb.dir/server/webserver.cc.i
+.PHONY : server/webserver.cc.i
 
-server/webserver.s: server/webserver.cpp.s
+server/webserver.s: server/webserver.cc.s
 
 .PHONY : server/webserver.s
 
 # target to generate assembly for a file
-server/webserver.cpp.s:
-	$(MAKE) -f CMakeFiles/FHdb.dir/build.make CMakeFiles/FHdb.dir/server/webserver.cpp.s
-.PHONY : server/webserver.cpp.s
+server/webserver.cc.s:
+	$(MAKE) -f CMakeFiles/FHdb.dir/build.make CMakeFiles/FHdb.dir/server/webserver.cc.s
+.PHONY : server/webserver.cc.s
+
+skiplist/test.o: skiplist/test.cc.o
+
+.PHONY : skiplist/test.o
+
+# target to build an object file
+skiplist/test.cc.o:
+	$(MAKE) -f CMakeFiles/FHdb.dir/build.make CMakeFiles/FHdb.dir/skiplist/test.cc.o
+.PHONY : skiplist/test.cc.o
+
+skiplist/test.i: skiplist/test.cc.i
+
+.PHONY : skiplist/test.i
+
+# target to preprocess a source file
+skiplist/test.cc.i:
+	$(MAKE) -f CMakeFiles/FHdb.dir/build.make CMakeFiles/FHdb.dir/skiplist/test.cc.i
+.PHONY : skiplist/test.cc.i
+
+skiplist/test.s: skiplist/test.cc.s
+
+.PHONY : skiplist/test.s
+
+# target to generate assembly for a file
+skiplist/test.cc.s:
+	$(MAKE) -f CMakeFiles/FHdb.dir/build.make CMakeFiles/FHdb.dir/skiplist/test.cc.s
+.PHONY : skiplist/test.cc.s
 
 test/test.o: test/test.cc.o
 
@@ -413,6 +440,9 @@ help:
 	@echo "... server/webserver.o"
 	@echo "... server/webserver.i"
 	@echo "... server/webserver.s"
+	@echo "... skiplist/test.o"
+	@echo "... skiplist/test.i"
+	@echo "... skiplist/test.s"
 	@echo "... test/test.o"
 	@echo "... test/test.i"
 	@echo "... test/test.s"

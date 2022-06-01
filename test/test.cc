@@ -6,6 +6,18 @@
 extern int use_log;
 namespace FHdb {
 
+  struct OPC_UA_MESSAGE {
+    std::string Message_Type;
+    std::string Chunk_Type;
+    int64_t     Message_Size;
+    int64_t     Secure_Channel_Id;
+    int64_t     Secure_Token_Id;
+    int64_t     Security_Sequence_Number;
+    int64_t     Security_Request_id;
+    std::string Message;
+  };
+  
+
 // test memory
 // int cnt_delete;
 // int cnt_new;
@@ -279,23 +291,30 @@ void TEST() {
   return ;
 }
 
+#define ToString(a) std::to_string(a)
 
 void DB_TEST() {
   ::use_log = 0;
-
   srand(time(0));
   int up = 10000;
   scanf("%d", &up);
   auto ptr = FHdb::DataBase::single();
   auto start = std::chrono::high_resolution_clock::now();
   for (int i = 1; i <= up; i++) {
-    ptr->ParseTheCommand("set a a");
+    int key = rand();
+    std::string value = "Security_Token_Id" + ToString(rand()) 
+                    + "Message" + ToString(rand()) 
+                    + "Chunk_Type" + ToString(rand())
+                    + "Message_size" + ToString(rand()) 
+                    + "SecureChannelId" + ToString(rand()) 
+                    + "Security_Sequence_Num" + ToString(rand()) 
+                    + "Security_Request_id" + ToString(rand());
+    ptr->ParseTheCommand("set " + ToString(key) + " " + value);
   }
   auto end = std::chrono::high_resolution_clock::now();
   std::cout << "skiplist_database_test_" << up << "_time_cost: ";
   printf("%d.%2ds\n",static_cast<int>(std::chrono::duration_cast<std::chrono::seconds>(end - start).count()), 
                      static_cast<int>(std::chrono::duration_cast<std::chrono::microseconds>(end - start).count()%1000));
-
   ::use_log = 1;
 }
 
